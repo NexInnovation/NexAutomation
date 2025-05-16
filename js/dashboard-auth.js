@@ -36,5 +36,5 @@ onAuthStateChanged(auth, (user) => {
 // Logout function
 window.logoutUser = async function () {
     await signOut(auth);
-    window.location.replace("login.html");
+    window.location.replace("inedx.html");
 };

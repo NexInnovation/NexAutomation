@@ -1,0 +1,98 @@
+/* .sidebar2 {
+    position: fixed;
+    top: 0;
+    left: 78px;
+    width: 250px;
+    height: 100%;
+    background: #11101d;
+    padding-top: 20px;
+    display: none;
+    z-index: 100;
+    transition: left 0.3s ease;
+} */
+
+.sidebar2 {
+    color: #fff;
+    position: fixed;
+    top: 0;
+    /* Will be updated dynamically */
+    left: 78px;
+    width: 250px;
+    background: #11101d;
+    display: none;
+    z-index: 100;
+    transition: left 0.3s ease, top 0.3s ease;
+    padding-left: 20px;
+    padding-top: 20px;
+
+    border-top-right-radius: 20px;
+}
+
+.sidebar2.show {
+    display: block;
+}
+
+.sidebar2 li {
+    list-style: none;
+}
+
+.sidebar2 ul {
+    list-style: none;
+}
+
+.sidebar2 ul {
+    list-style: none;
+    padding: 20px;
+    margin: 0;
+}
+
+.sidebar2 li {
+    margin-bottom: 20px;
+}
+
+.sidebar2 label.links_name {
+    display: block;
+    font-size: 15px;
+    font-weight: 500;
+    color: #ffffff;
+    margin-bottom: 6px;
+}
+
+.sidebar2 input[type="text"],
+.sidebar2 input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    background-color: #ffffff;
+    color: #11101d;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    transition: 0.2s;
+}
+
+.sidebar2 input::placeholder {
+    color: #aaa;
+}
+
+.sidebar2 input:focus {
+    box-shadow: 0 0 6px #1d8cf8;
+}
+
+.sidebar2 button {
+    padding: 10px;
+    width: 100%;
+    background-color: #1d8cf8;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar2 button:hover {
+    background-color: #1261c3;
+}

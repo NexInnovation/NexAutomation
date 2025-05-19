@@ -1,0 +1,45 @@
+/* .remember-me-container {
+    display: block;
+    margin: auto;
+    margin-top: 0;
+    text-align: left;
+}
+
+.remember-me-label {
+    font-size: 15px;
+    color: #555;
+    user-select: none;
+}
+
+.remember-me-label input[type="checkbox"] {
+    margin-right: 0px;
+    transform: scale(1);
+} */
+
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15px;
+    padding-bottom: 18px;
+}
+
+.remember-me-container {
+    flex: 1;
+    text-align: left;
+}
+
+.forgot-password {
+    flex: 1;
+    text-align: right;
+}
+
+.forgot-password a {
+    font-size: 14px;
+    color: #555;
+    text-decoration: none;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}

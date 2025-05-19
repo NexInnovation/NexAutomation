@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>NexInnovation</title>
+
+    <link rel="stylesheet" href="css/dashboard-style.css" />
+    <link rel="stylesheet" href="css/dashboard-style2.css" />
+    <link rel="stylesheet" href="css/dashboard-style3.css" />
+    <link rel="stylesheet" href="css/dashboard-setting.css" />
+    <!-- Boxicons CDN Link -->
+    <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="logo-details">
+            <img src="img/NexInnovation low margin logo.png" class="logo-image" alt="Logo" />
+            <i class="bx bx-menu" id="btn"></i>
+        </div>
+        <ul class="nav-list">
+            <!-- <li>
+                <a href="#">
+                    <i class="bx bx-user"></i>
+                    <span class="links_name">Profile</span>
+                </a>
+                <span class="tooltip">Profile</span>
+            </li> -->
+            <li id="profile-btn">
+                <a href="#">
+                    <i class="bx bx-user"></i>
+                    <span class="links_name">Profile</span>
+                </a>
+                <span class="tooltip">Profile</span>
+            </li>
+
+            <li id="settings-btn">
+                <a href="#">
+                    <i class="bx bx-cog"></i>
+                    <span class="links_name">Setting</span>
+                </a>
+                <span class="tooltip">Setting</span>
+            </li>
+            <li class="profile">
+                <div class="profile-details">
+                    <!-- <img src="profile.jpg" alt="profileImg" /> -->
+                    <div class="name_job">
+                        <div class="name" id="sidebar-username">Loading...</div>
+                    </div>
+                </div>
+                <i class='bx bx-log-out' id="log_out"></i>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 🔹 Settings Nav (Adjacent to Sidebar) -->
+    <!-- <div id="settings-panel" class="settings-panel">
+    <h3>WiFi Configuration</h3>
+    <label for="ssid">SSID</label>
+    <input type="text" id="ssid" placeholder="Enter SSID">
+    <label for="password">Password</label>
+    <input placeholder="Password" type="password" id="pwd">
+    <input type="checkbox" onclick="pwd.type = this.checked ? 'text' : 'password'"> Show Password
+    <br><br>
+    <button id="save-settings">Save</button>
+  </div> -->
+    <div class="sidebar2">
+        <ul class="nav-list">
+            <li>
+                <label class="links_name">Wi-Fi Setup</label>
+            </li>
+
+            <!-- 🔽 Wrap in a form -->
+            <form id="wifi-form">
+                <li>
+                    <label class="links_name">SSID</label>
+                    <input type="text" id="ssid" placeholder="Enter SSID" />
+                </li>
+                <li>
+                    <label class="links_name">Password</label>
+                    <input type="text" id="password" placeholder="Enter Password" />
+                </li>
+                <li>
+                    <button id="submit-wifi" type="submit">Submit</button>
+                </li>
+            </form>
+        </ul>
+    </div>
+
+    <div class="sidebar3">
+        <ul class="nav-list">
+            <form id="profile-form">
+                <li><label class="links_name">Profile</label></li>
+
+                <li>
+                    <label class="links_name">Name</label>
+                    <div class="name-group">
+                        <input type="text" id="profile-firstname" placeholder="First Name" />
+                        <!-- <input type="text" id="profile-middlename" placeholder="Middle" /> -->
+                        <input type="text" id="profile-lasttname" placeholder="Last Name" />
+                    </div>
+                </li>
+
+                <li>
+                    <label class="links_name">Mobile Number</label>
+                    <input type="text" id="profile-mobile" placeholder="Enter Mobile Number" />
+                </li>
+
+                <li>
+                    <label class="links_name">UID</label>
+                    <input type="password" id="profile-uid-not-editable" placeholder="UID" />
+                </li>
+
+                <li>
+                    <button id="submit-profile" type="submit">Update</button>
+                </li>
+            </form>
+        </ul>
+    </div>
+
+
+
+    <section class="home-section">
+        <div class="text">Dashboard</div>
+    </section>
+
+    <script type="module" src="js/dashboard.js"></script>
+</body>
+
+</html>

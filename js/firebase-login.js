@@ -32,10 +32,27 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
 
+Swal.fire({
+    title: "Checking Login...",
+    text: "Please wait",
+    allowOutsideClick: false,
+    didOpen: () => Swal.showLoading()
+});
+
 // ✅ Auto-redirect if already logged in
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
     if (user) {
+        Swal.fire({
+            title: "Auto logging in...",
+            text: "Please wait",
+            allowOutsideClick: false,
+            didOpen: () => Swal.showLoading()
+        });
+
+        await new Promise(resolve => setTimeout(resolve, 200));
         window.location.replace("dashboard.html");
+    } else {
+        Swal.close();
     }
 });
 

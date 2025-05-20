@@ -29,9 +29,9 @@
     border-top-right-radius: 20px;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 500px) {
     .sidebar3 {
-        width: 90vw;
+        width: 80vw;
         left: 0;
     }
 }

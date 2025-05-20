@@ -47,23 +47,107 @@ document.querySelector('.login100-form').addEventListener('submit', async functi
     const password = document.getElementById('password').value.trim();
     const remember = document.getElementById('rememberMe').checked;
 
+    // ✅ Input validation
+    if (!email || !email.includes("@") || !email.includes(".")) {
+        Swal.fire({
+            icon: "warning",
+            title: "Invalid Email",
+            text: "Please enter a valid email address.",
+            confirmButtonText: "OK"
+        });
+        return;
+    }
+
+    if (!password) {
+        Swal.fire({
+            icon: "warning",
+            title: "Missing Password",
+            text: "Please enter your password.",
+            confirmButtonText: "OK"
+        });
+        return;
+    }
+
     const persistenceType = remember ? browserLocalPersistence : browserSessionPersistence;
 
     try {
+        Swal.fire({
+            title: "Logging in...",
+            text: "Please wait",
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
         await setPersistence(auth, persistenceType);
         const credential = await signInWithEmailAndPassword(auth, email, password);
-
-        // ✅ Fetch first name from DB
         const user = credential.user;
-        const nameRef = ref(db, `users/${user.uid}/firstName`);
-        const snapshot = await get(nameRef);
 
-        if (snapshot.exists()) {
-            localStorage.setItem("firstName", snapshot.val());
+        // ✅ Fetch full profile
+        const profileRef = ref(db, `users/${user.uid}`);
+        const profileSnapshot = await get(profileRef);
+
+        if (profileSnapshot.exists()) {
+            const profile = profileSnapshot.val();
+            const fullProfile = {
+                firstName: profile.firstName || "",
+                lastName: profile.lastName || "",
+                mobile: profile.mobile || "",
+                email: profile.email || "",
+                city: profile.city || "",
+                uid: user.uid
+            };
+            localStorage.setItem("userProfile", JSON.stringify(fullProfile));
         }
 
+        // ✅ Fetch Wi-Fi config
+        const wifiRef = ref(db, "config/wifi");
+        const wifiSnapshot = await get(wifiRef);
+        if (wifiSnapshot.exists()) {
+            const wifi = wifiSnapshot.val();
+            const wifiConfig = {
+                ssid: wifi.ssid || "",
+                password: wifi.password || ""
+            };
+            localStorage.setItem("wifiConfig", JSON.stringify(wifiConfig));
+        }
+
+        Swal.close(); // ✅ Close loading spinner
         window.location.href = "dashboard.html";
+
     } catch (error) {
-        alert("Login failed: " + error.message);
+        Swal.close(); // ✅ Close spinner on error
+
+        console.error("❌ Login failed:", error);
+
+        let message = "Login failed. Please try again.";
+        if (error.code === "auth/invalid-credential") {
+            message = "Invalid email or password.";
+        } else if (error.code === "auth/network-request-failed") {
+            message = "Network error. Please check your internet connection.";
+        }
+
+        Swal.fire({
+            icon: "error",
+            title: "Login Failed",
+            text: message,
+            confirmButtonText: "OK"
+        });
+    }
+});
+
+
+// 👁️ Toggle password visibility
+document.getElementById("toggle-login-password").addEventListener("click", () => {
+    const pwdField = document.getElementById("password");
+    const toggleIcon = document.getElementById("toggle-login-password");
+
+    if (pwdField.type === "password") {
+        pwdField.type = "text";
+        toggleIcon.classList.replace("bx-show", "bx-hide");
+    } else {
+        pwdField.type = "password";
+        toggleIcon.classList.replace("bx-hide", "bx-show");
     }
 });

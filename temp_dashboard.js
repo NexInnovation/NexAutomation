@@ -15,8 +15,6 @@ import {
     set
 } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-database.js";
 
-// import Swal from "https://cdn.jsdelivr.net/npm/sweetalert2@11";
-
 // ✅ Firebase Config
 const firebaseConfig = {
     apiKey: "AIzaSyD3GvlENwkMR6Khab1g-qT6WukrCVUwGSs",
@@ -47,7 +45,7 @@ let userProfile = {
     uid: ""
 };
 
-// ✅ Global DOM references
+// ✅ Sidebar setup
 const sidebar = document.querySelector(".sidebar");
 const sidebar2 = document.querySelector(".sidebar2");
 const sidebar3 = document.querySelector(".sidebar3");
@@ -55,7 +53,6 @@ const closeBtn = document.getElementById("btn");
 const settingsBtn = document.getElementById("settings-btn");
 const profileBtn = document.getElementById("profile-btn");
 
-// ✅ Utility functions
 function fillWiFiFieldsFromSaved() {
     document.getElementById("ssid").value = savedWiFiConfig.ssid || "";
     document.getElementById("password").value = savedWiFiConfig.password || "";
@@ -86,114 +83,101 @@ function adjustSidebar3() {
     sidebar3.style.height = `${window.innerHeight - top - 10}px`;
 }
 
-function getFromStorage(key) {
-    try {
-        return JSON.parse(localStorage.getItem(key));
-    } catch {
-        return null;
-    }
-}
-
-async function fetchAndCache(refPath, localKey) {
-    try {
-        const snapshot = await get(ref(db, refPath));
-        if (snapshot.exists()) {
-            const data = snapshot.val();
-            localStorage.setItem(localKey, JSON.stringify(data));
-            return data;
-        } else {
-            console.warn(`⚠️ No data found at ${refPath}`);
-            return null;
-        }
-    } catch (err) {
-        console.error(`❌ Error fetching ${refPath}:`, err);
-        return null;
-    }
-}
-
-// ✅ Clear cache utility (for debug or admin use)
-function clearLocalStorageCache() {
-    localStorage.removeItem("userProfile");
-    localStorage.removeItem("wifiConfig");
-    console.warn("🧹 Cleared localStorage cache for userProfile and wifiConfig.");
-}
-
-function confirmDiscardIfChanged(current, original) {
-    return Object.keys(original).some(key => current[key] !== original[key]);
-}
-
-function getWiFiFormData() {
-    return {
-        ssid: document.getElementById("ssid").value.trim(),
-        password: document.getElementById("password").value.trim()
-    };
-}
-
-function getProfileFormData() {
-    return {
-        firstName: document.getElementById("profile-firstname").value.trim(),
-        lastName: document.getElementById("profile-lasttname").value.trim(),
-        mobile: document.getElementById("profile-mobile").value.trim(),
-        email: document.getElementById("profile-email").value.trim(),
-        city: document.getElementById("profile-city").value.trim(),
-        uid: document.getElementById("profile-uid-not-editable").value.trim()
-    };
-}
-
 // ✅ DOM Ready
 document.addEventListener("DOMContentLoaded", function () {
-    Swal.fire({
-        title: "Loading Dashboard...",
-        text: "Fetching user data",
-        allowOutsideClick: false,
-        didOpen: () => {
-            Swal.showLoading();
-        }
-    });
-
     onAuthStateChanged(auth, async (user) => {
         if (!user) {
             window.location.href = "index.html";
             return;
         }
 
-        Swal.close();
-
         userProfile.uid = user.uid;
 
-        const cachedProfile = getFromStorage("userProfile");
+
+        // ✅ Try loading user profile from localStorage
+        const cachedProfile = localStorage.getItem("userProfile");
         if (cachedProfile) {
-            userProfile = {
-                ...userProfile,
-                ...cachedProfile
-            };
-            fillProfileFieldsFromSaved();
-            document.getElementById("sidebar-username").innerText = userProfile.firstName || "User";
-            console.log("✅ Loaded profile from localStorage:", userProfile);
-        } else {
-            const data = await fetchAndCache(`users/${user.uid}`, "userProfile");
-            if (data) {
+            try {
+                const data = JSON.parse(cachedProfile);
                 userProfile = {
                     ...userProfile,
                     ...data
                 };
                 fillProfileFieldsFromSaved();
-                document.getElementById("sidebar-username").innerText = userProfile.firstName;
-                console.log("✅ Loaded profile from Firebase:", userProfile);
+                document.getElementById("sidebar-username").innerText = userProfile.firstName || "User";
+
+                console.log("✅ Loaded profile from localStorage:");
+                console.log("First Name:", userProfile.firstName);
+                console.log("Last Name:", userProfile.lastName);
+                console.log("Mobile:", userProfile.mobile);
+                console.log("Email:", userProfile.email);
+                console.log("City:", userProfile.city);
+                console.log("UID:", userProfile.uid);
+            } catch (err) {
+                console.error("⚠️ Failed to parse cached profile:", err);
+            }
+        } else {
+            // 🔁 Fallback to Firebase
+            try {
+                const snapshot = await get(ref(db, `users/${user.uid}`));
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    userProfile.firstName = data.firstName || "";
+                    userProfile.lastName = data.lastName || "";
+                    userProfile.mobile = data.mobile || "";
+                    userProfile.email = data.email || "";
+                    userProfile.city = data.city || "";
+                    userProfile.uid = user.uid;
+
+                    fillProfileFieldsFromSaved();
+                    document.getElementById("sidebar-username").innerText = userProfile.firstName;
+                    localStorage.setItem("userProfile", JSON.stringify(userProfile));
+
+                    console.log("✅ Loaded profile from Firebase:");
+                    console.log("First Name:", userProfile.firstName);
+                    console.log("Last Name:", userProfile.lastName);
+                    console.log("Mobile:", userProfile.mobile);
+                    console.log("Email:", userProfile.email);
+                    console.log("City:", userProfile.city);
+                    console.log("UID:", userProfile.uid);
+                } else {
+                    console.warn("⚠️ No profile data found in DB.");
+                }
+            } catch (err) {
+                console.error("❌ Error fetching profile from DB:", err);
             }
         }
 
-        const cachedWiFi = getFromStorage("wifiConfig");
+        // ✅ Try loading Wi-Fi config from localStorage
+        const cachedWiFi = localStorage.getItem("wifiConfig");
         if (cachedWiFi) {
-            savedWiFiConfig = cachedWiFi;
-            fillWiFiFieldsFromSaved();
-            console.log("✅ Loaded Wi-Fi config from localStorage:", savedWiFiConfig);
-        } else {
-            const wifi = await fetchAndCache("config/wifi", "wifiConfig");
-            if (wifi) {
-                savedWiFiConfig = wifi;
+            try {
+                savedWiFiConfig = JSON.parse(cachedWiFi);
                 fillWiFiFieldsFromSaved();
-                console.log("✅ Loaded Wi-Fi config from Firebase:", savedWiFiConfig);
+
+                console.log("✅ Loaded Wi-Fi config from localStorage:");
+                console.log("SSID:", savedWiFiConfig.ssid);
+                console.log("Password:", savedWiFiConfig.password);
+            } catch (err) {
+                console.error("⚠️ Failed to parse cached Wi-Fi config:", err);
+            }
+        } else {
+            // 🔁 Fallback to Firebase
+            try {
+                const wifiSnapshot = await get(ref(db, "config/wifi"));
+                if (wifiSnapshot.exists()) {
+                    savedWiFiConfig = wifiSnapshot.val();
+                    fillWiFiFieldsFromSaved();
+                    localStorage.setItem("wifiConfig", JSON.stringify(savedWiFiConfig));
+
+                    console.log("✅ Loaded Wi-Fi config from Firebase:");
+                    console.log("SSID:", savedWiFiConfig.ssid);
+                    console.log("Password:", savedWiFiConfig.password);
+                } else {
+                    console.warn("⚠️ No Wi-Fi config found in DB.");
+                }
+            } catch (err) {
+                console.error("❌ Error fetching Wi-Fi config from DB:", err);
             }
         }
     });
@@ -282,126 +266,51 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-document.addEventListener("click", (e) => {
-    if (sidebar2.classList.contains("show") && !sidebar2.contains(e.target) && !settingsBtn.contains(e.target)) {
-        const current = getWiFiFormData();
-        if (confirmDiscardIfChanged(current, savedWiFiConfig)) {
-            Swal.fire({
-                icon: "info",
-                title: "Changes Discarded",
-                text: "Your unsaved Wifi changes were not saved."
-            });
-            fillWiFiFieldsFromSaved();
-        }
-        sidebar2.classList.remove("show");
-        settingsBtn.classList.remove("submenu-open");
-    }
-
-    if (sidebar3.classList.contains("show") && !sidebar3.contains(e.target) && !profileBtn.contains(e.target)) {
-        const current = getProfileFormData();
-        if (confirmDiscardIfChanged(current, userProfile)) {
-            Swal.fire({
-                icon: "info",
-                title: "Changes Discarded",
-                text: "Your unsaved profile changes were not saved."
-            });
-            fillProfileFieldsFromSaved();
-        }
-        sidebar3.classList.remove("show");
-        profileBtn.classList.remove("submenu-open");
-    }
-});
-
-document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-        if (sidebar2.classList.contains("show")) {
-            const current = getWiFiFormData();
-            if (confirmDiscardIfChanged(current, savedWiFiConfig)) {
-                Swal.fire({
-                    icon: "info",
-                    title: "Changes Discarded",
-                    text: "Your unsaved Wifi changes were not saved."
-                });
-                fillWiFiFieldsFromSaved();
-            }
-            sidebar2.classList.remove("show");
-            settingsBtn.classList.remove("submenu-open");
-        }
-
-        if (sidebar3.classList.contains("show")) {
-            const current = getProfileFormData();
-            if (confirmDiscardIfChanged(current, userProfile)) {
-                Swal.fire({
-                    icon: "info",
-                    title: "Changes Discarded",
-                    text: "Your unsaved profile changes were not saved."
-                });
-                fillProfileFieldsFromSaved();
-            }
-            sidebar3.classList.remove("show");
-            profileBtn.classList.remove("submenu-open");
-        }
-    }
-});
-
+// 💾 Save Wi-Fi config
 document.getElementById("wifi-form").addEventListener("submit", async (e) => {
     e.preventDefault();
     const ssid = document.getElementById("ssid").value.trim();
     const password = document.getElementById("password").value.trim();
 
     if (!ssid || !password) {
+
         Swal.fire({
             icon: "warning",
             title: "Missing Info",
             text: "Please enter both SSID and Password.",
             confirmButtonText: "OK"
         });
+
         fillWiFiFieldsFromSaved();
+
         return;
     }
 
     try {
-        Swal.fire({
-            title: "Saving Wi-Fi credentials...",
-            text: "Please wait",
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
-            }
-        });
-
         await set(ref(db, "config/wifi"), {
             ssid,
             password
         });
-
         savedWiFiConfig = {
             ssid,
             password
         };
 
-        Swal.close(); // Close loader
-
         Swal.fire({
             icon: "success",
-            title: "Wi-Fi credentials Saved",
+            title: "Wi-Fi Saved",
             text: "Your SSID and Password have been updated."
         });
 
         document.querySelector(".sidebar2").classList.remove("show");
         document.getElementById("settings-btn").classList.remove("submenu-open");
     } catch (err) {
-        Swal.close(); // Close loader on error
         console.error("❌ Error saving Wi-Fi:", err);
-        Swal.fire({
-            icon: "error",
-            title: "Wi-Fi Save Failed",
-            text: err.message
-        });
+        alert("Error: " + err.message);
     }
 });
 
-
+// 💾 Save profile data
 document.getElementById("profile-form").addEventListener("submit", async (e) => {
     e.preventDefault();
     const firstName = document.getElementById("profile-firstname").value.trim();
@@ -412,25 +321,19 @@ document.getElementById("profile-form").addEventListener("submit", async (e) => 
     const uid = userProfile.uid;
 
     if (!firstName || !lastName || !mobile || !email || !city) {
+
         Swal.fire({
             icon: "warning",
             title: "Incomplete Profile",
             text: "Please fill in all profile fields."
         });
+
         fillProfileFieldsFromSaved();
+
         return;
     }
 
     try {
-        Swal.fire({
-            title: "Updating Profile...",
-            text: "Please wait",
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
-            }
-        });
-
         await set(ref(db, `users/${uid}`), {
             firstName,
             lastName,
@@ -439,16 +342,15 @@ document.getElementById("profile-form").addEventListener("submit", async (e) => 
             city
         });
 
-        Object.assign(userProfile, {
-            firstName,
-            lastName,
-            mobile,
-            email,
-            city
-        });
-        document.getElementById("sidebar-username").innerText = firstName;
+        // Update memory
+        userProfile.firstName = firstName;
+        userProfile.lastName = lastName;
+        userProfile.mobile = mobile;
+        userProfile.email = email;
+        userProfile.city = city;
 
-        Swal.close();
+        // Update sidebar name
+        document.getElementById("sidebar-username").innerText = firstName;
 
         Swal.fire({
             icon: "success",
@@ -459,17 +361,18 @@ document.getElementById("profile-form").addEventListener("submit", async (e) => 
         document.querySelector(".sidebar3").classList.remove("show");
         document.getElementById("profile-btn").classList.remove("submenu-open");
     } catch (err) {
-        Swal.close();
         console.error("❌ Error saving profile:", err);
+
         Swal.fire({
             icon: "error",
-            title: "Profile Update Failed",
+            title: "Update Failed",
             text: "Something went wrong.",
             footer: err.message
         });
+
+
     }
 });
-
 
 // 👁️ Toggle UID visibility
 document.getElementById("toggle-uid-visibility").addEventListener("click", () => {

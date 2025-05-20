@@ -64,24 +64,17 @@
 
                     <div class="wrap-input100 validate-input" data-validate="Password is required">
                         <span class="label-input100">Password</span>
-                        <!-- <input class="input100" type="password" name="pass" placeholder="Type your password"> -->
                         <input class="input100" type="password" name="password" id="password"
-                            placeholder="Type your password">
+                            placeholder="Type your password" />
+
+                        <!-- 👁️ Eye icon directly inside wrap-input100 -->
+                        <i class='bx bx-show login-eye' id="toggle-login-password"></i>
+
                         <span class="focus-input100" data-symbol="&#xf190;"></span>
                     </div>
 
-                    <!-- <div class="text-right p-t-8 p-b-0">
-                        <a href="#">
-                            Forgot password?
-                        </a>
-                    </div>
 
-                    <div class="remember-me-container">
-                        <label class="remember-me-label">
-                            <input type="checkbox" id="rememberMe">
-                            Keep me signed in
-                        </label>
-                    </div> -->
+
 
                     <div class="login-options">
                         <div class="remember-me-container">
@@ -130,8 +123,12 @@
     <!--===============================================================================================-->
     <script src="vendor/countdowntime/countdowntime.js"></script>
     <!--===============================================================================================-->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script src="js/main-login.js"></script>
     <script type="module" src="js/firebase-login.js"></script>
+
 
 
 </body>

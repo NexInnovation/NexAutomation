@@ -43,3 +43,21 @@
 .forgot-password a:hover {
     text-decoration: underline;
 }
+
+/*-------------*/
+
+/* 👁️ Eye icon inside login field */
+.login-eye {
+    position: absolute;
+    right: 25px;
+    bottom: 12px;
+    font-size: 18px;
+    color: #999;
+    cursor: pointer;
+    z-index: 2;
+    transition: color 0.3s ease;
+}
+
+.login-eye:hover {
+    color: #333;
+}

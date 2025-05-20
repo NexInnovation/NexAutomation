@@ -44,7 +44,7 @@
     .sidebar3 {
         width: 80vw;
         left: 0;
-        border-radius: 0;
+        border-top-right-radius: 20px;
     }
 }
 

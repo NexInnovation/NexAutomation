@@ -17,7 +17,7 @@
     top: 0;
     /* Will be updated dynamically */
     left: 78px;
-    width: 300px;
+    width: 380px;
     max-width: 100vw;
     background: #11101d;
     display: none;
@@ -158,10 +158,10 @@
     align-items: center;
     position: relative;
     width: 100%;
-    background: white;
+    /* background: white; */
     border-radius: 8px;
     overflow: hidden;
-    padding-right: 10px;
+    padding-right: 5px;
 }
 
 /* Input takes full space */
@@ -180,7 +180,7 @@
     font-size: 18px;
     color: #777;
     cursor: pointer;
-    margin-left: -5px;
+    margin-left: -25px;
     transition: color 0.3s ease;
 }
 

@@ -49,6 +49,8 @@ onAuthStateChanged(auth, async (user) => {
             didOpen: () => Swal.showLoading()
         });
 
+        // check for comit and push
+
         await new Promise(resolve => setTimeout(resolve, 200));
         window.location.replace("dashboard.html");
     } else {

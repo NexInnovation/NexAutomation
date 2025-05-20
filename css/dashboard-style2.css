@@ -29,6 +29,13 @@
     border-top-right-radius: 20px;
 }
 
+@media (max-width: 480px) {
+    .sidebar2 {
+        width: 90vw;
+        left: 0;
+    }
+}
+
 .sidebar2.show {
     display: block;
 }

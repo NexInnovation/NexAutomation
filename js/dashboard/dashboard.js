@@ -203,6 +203,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (logoutBtn) {
         logoutBtn.addEventListener("click", () => {
             signOut(auth).then(() => {
+                clearLocalStorageCache();
                 window.location.href = "index.html";
             }).catch((err) => {
                 alert("Logout failed: " + err.message);

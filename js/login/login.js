@@ -45,7 +45,7 @@ let isManualLoginOrSignup = false;
 // ✅ On login Button Click
 loginBtn.addEventListener("click", async () => {
     // 🔍 Get login form data
-    const email = document.getElementById('login-email').value.trim();
+    const email = document.getElementById('login-email').value.trim().toLowerCase();
     const password = document.getElementById('login-password').value.trim();
     const remember = document.getElementById('rememberMe').checked;
 
@@ -127,6 +127,26 @@ loginBtn.addEventListener("click", async () => {
         sessionStorage.setItem("role", role || "");
         sessionStorage.setItem("userProfile", JSON.stringify(fullProfile));
 
+        sessionStorage.setItem("adminPassword", password); // ✅ Store securely (for re-login during member creation)
+
+        try {
+            const allUsersRef = ref(db, `automation/${homeId}/user`);
+            const allUsersSnap = await get(allUsersRef);
+
+            if (allUsersSnap.exists()) {
+                const userList = allUsersSnap.val();
+                sessionStorage.setItem("homeUsers", JSON.stringify(userList));
+                console.log("👥 All users cached in sessionStorage:", userList);
+            } else {
+                console.warn("⚠️ No users found under this home.");
+                sessionStorage.setItem("homeUsers", JSON.stringify({}));
+            }
+        } catch (err) {
+            console.error("❌ Failed to fetch user list for home:", err);
+            sessionStorage.setItem("homeUsers", JSON.stringify({}));
+        }
+
+
         console.log("🗂️ User session data saved:");
         console.log("👤 First Name:", sessionStorage.getItem("firstName"));
         console.log("👤 Last Name:", sessionStorage.getItem("lastName"));
@@ -196,138 +216,27 @@ loginBtn.addEventListener("click", async () => {
     }
 });
 
-
-// ✅ On Signup Button Click
-// signupBtn.addEventListener("click", async () => {
-//     const email = document.getElementById("signup-email").value.trim();
-//     const password = document.getElementById("signup-password").value.trim();
-
-//     console.log("📧 Email entered:", email);
-//     console.log("🔑 Password entered:", password ? "(hidden for security)" : "(empty)");
-
-//     // ✅ Validate inputs
-//     if (!validateInputs(email, password)) {
-//         console.warn("⚠️ Validation failed for email or password.");
-//         return;
-//     }
-
-//     try {
-//         Swal.fire({
-//             title: "Creating account...",
-//             allowOutsideClick: false,
-//             didOpen: () => Swal.showLoading()
-//         });
-
-//         console.log("🚀 Creating Firebase Auth account...");
-
-//         // ✅ Create user in Firebase Auth
-//         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-//         const uid = userCredential.user.uid;
-//         console.log("✅ Firebase user created with UID:", uid);
-
-//         // ✅ Get last used home number
-//         console.log("📡 Fetching last used home number...");
-//         const lastNumberSnap = await get(ref(db, "NexInnovation-config/lastNumber"));
-//         let lastNumber = 0;
-
-//         if (lastNumberSnap.exists()) {
-//             lastNumber = parseInt(lastNumberSnap.val());
-//             console.log("📥 Last home number from DB:", lastNumber);
-//         } else {
-//             console.warn("⚠️ No lastNumber found in DB. Using default 0000.");
-//         }
-
-//         const newNumber = lastNumber + 1;
-//         const numberStr = String(newNumber).padStart(4, "0");
-
-//         const pushKey = push(ref(db)).key;
-//         console.log("🔑 Firebase Push Key generated:", pushKey);
-
-//         const homeId = `home${numberStr}-${pushKey}`;
-//         console.log("🏠 Final Home ID:", homeId);
-
-//         // ✅ Update last number in DB
-//         // await update(ref(db, "NexInnovation-config"), {
-//         //     lastNumber: newNumber
-//         // });
-//         // console.log("✅ Updated NexInnovation-config/lastNumber to:", newNumber);
-//         await update(ref(db, DB_PATHS.lastDeviceNumber.split('/')[0]), {
-//             lastNumber: newNumber
-//         });
-//         console.log("✅ Updated NexInnovation-config/lastNumber to:", newNumber);
-
-//         // ✅ Store user details under automation
-//         const userData = {
-//             uid,
-//             email,
-//             role: "admin",
-//             isAdmin: true,
-//             homeId,
-//             createdAt: new Date().toISOString()
-//         };
-//         console.log("📤 Saving user data to automation path:", userData);
-
-//         await set(ref(db, DB_PATHS.userProfile(homeId, uid)), userData);
-//         console.log(`✅ Data saved to ${DB_PATHS.userProfile(homeId, uid)}`);
-
-//         // ✅ Store home ID and role globally
-//         const globalUserRef = {
-//             homeId,
-//             role: "admin"
-//         };
-//         await set(ref(db, DB_PATHS.userMapping(uid)), globalUserRef);
-//         console.log("📤 Stored user global mapping at", DB_PATHS.userMapping(uid), ":", globalUserRef);
-
-//         // ✅ Save to sessionStorage
-//         sessionStorage.setItem("uid", uid);
-//         sessionStorage.setItem("homeId", homeId);
-//         sessionStorage.setItem("email", email);
-//         sessionStorage.setItem("role", "admin");
-//         console.log("🗂️ Saved sessionStorage:", {
-//             uid,
-//             homeId,
-//             email,
-//             role: "admin"
-//         });
-
-//         Swal.close();
-//         console.log("🎯 Signup completed successfully. Ready to redirect to dashboard.");
-
-//         // ✅ Redirect to dashboard
-//         window.location.href = "dashboard.html";
-
-//     } catch (error) {
-//         console.error("❌ Signup failed with error:", error);
-
-//         let message = "Signup failed. Please try again.";
-
-//         if (error.code === "auth/email-already-in-use") {
-//             message = "This email is already registered. Try logging in or use 'Forgot Password'.";
-//         } else if (error.code === "auth/invalid-email") {
-//             message = "The email address is badly formatted.";
-//         } else if (error.code === "auth/weak-password") {
-//             message = "Password should be at least 6 characters.";
-//         }
-
-//         Swal.fire({
-//             icon: "warning",
-//             title: "Signup Error",
-//             text: message,
-//             confirmButtonText: "OK"
-//         });
-//     }
-// });
-
 signupBtn.addEventListener("click", async () => {
-    const email = document.getElementById("signup-email").value.trim();
+    const email = document.getElementById("signup-email").value.trim().toLowerCase();
     const password = document.getElementById("signup-password").value.trim();
+    const fname = document.getElementById("signup-fname").value.trim();
 
+    console.log("📧 F Name entered:", fname);
     console.log("📧 Email entered:", email);
     console.log("🔑 Password entered:", password ? "(hidden for security)" : "(empty)");
 
     if (!validateInputs(email, password)) {
         console.warn("⚠️ Validation failed for email or password.");
         return;
+    }
+
+    if (!fname) {
+        Swal.fire({
+            icon: "warning",
+            title: "Enter Name",
+            text: "Enter your first name."
+        });
+        return false;
     }
 
     try {
@@ -355,12 +264,12 @@ signupBtn.addEventListener("click", async () => {
 
         const userData = {
             uid,
-            email,
+            email: email,
             role: "admin",
             isAdmin: true,
             homeId,
             createdAt: new Date().toISOString(),
-            firstName: "",
+            firstName: fname,
             lastName: "",
             mobile: "",
             city: ""
@@ -380,14 +289,17 @@ signupBtn.addEventListener("click", async () => {
 
         // 💾 Save to sessionStorage
         sessionStorage.setItem("firstName", userData.firstName);
-        sessionStorage.setItem("lastName", userData.lastName);
-        sessionStorage.setItem("mobile", userData.mobile);
-        sessionStorage.setItem("city", userData.city);
+        sessionStorage.setItem("lastName", "");
+        sessionStorage.setItem("mobile", "");
+        sessionStorage.setItem("city", "");
         sessionStorage.setItem("email", userData.email);
         sessionStorage.setItem("uid", uid);
         sessionStorage.setItem("homeId", homeId);
         sessionStorage.setItem("role", userData.role);
         sessionStorage.setItem("userProfile", JSON.stringify(userData));
+
+        sessionStorage.setItem("adminPassword", password); // ✅ Store securely (for re-login during member creation)
+
 
         sessionStorage.setItem("ssid", "");
         sessionStorage.setItem("password", "");

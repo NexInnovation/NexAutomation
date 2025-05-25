@@ -36,6 +36,7 @@ const auth = getAuth(app);
 const db = getDatabase(app); // Optional use in other scripts
 
 import {
+    fillMemberListSidebarFromSession,
     fillProfileFieldsFromSession,
     fillWiFiFieldsFromSession
 }
@@ -101,17 +102,18 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.log("🌆 City:", userProfile?.city || "Not found");
 
         // ⏱️ Add 1 second delay before filling form
-        await new Promise(resolve => setTimeout(resolve, 500));
+        // await new Promise(resolve => setTimeout(resolve, 500));
 
         if (!is_manual_signout) {
             fillProfileFieldsFromSession();
             fillWiFiFieldsFromSession();
+            fillMemberListSidebarFromSession();
         }
 
-
-        setTimeout(() => {
-            Swal.close();
-        }, 500);
+        Swal.close();
+        // setTimeout(() => {
+        //     Swal.close();
+        // }, 500);
 
     });
 

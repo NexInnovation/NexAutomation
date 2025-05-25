@@ -1,0 +1,128 @@
+/* .sidebar6 {
+    position: fixed;
+    top: 0;
+    left: 78px;
+    width: 250px;
+    height: 100%;
+    background: #11101d;
+    padding-top: 20px;
+    display: none;
+    z-index: 100;
+    transition: left 0.3s ease;
+} */
+
+.sidebar6 {
+    width: 380px;
+    max-width: 80vw;
+    max-height: 100vh;
+    /* ✅ Prevent vertical overflow */
+    overflow-y: auto;
+    /* ✅ Enable vertical scroll */
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    /* ✅ Smooth mobile scrolling */
+
+    box-sizing: border-box;
+    background: #11101d;
+    position: fixed;
+    top: 0;
+    left: 78px;
+    display: none;
+    z-index: 100;
+    transition: left 0.3s ease, top 0.3s ease;
+    padding: 20px;
+    border-top-right-radius: 20px;
+}
+
+.sidebar6 * {
+    max-width: 100%;
+    /* box-sizing: border-box; */
+}
+
+/* ✅ Mobile view override */
+@media (max-width: 480px) {
+    .sidebar6 {
+        width: calc(100vw - 12px);
+        /* leave space on right side */
+        left: 0;
+        border-top-right-radius: 20px;
+        /* ✅ Keep only top-right corner rounded */
+        border-top-left-radius: 0;
+        /* ensure no left rounding */
+        margin-right: 0;
+        /* no side margin needed */
+    }
+}
+
+.sidebar6::-webkit-scrollbar {
+    display: none;
+}
+
+.sidebar6.show {
+    display: block;
+}
+
+.sidebar6 li {
+    list-style: none;
+}
+
+.sidebar6 ul {
+    list-style: none;
+}
+
+.sidebar6 ul {
+    list-style: none;
+    padding: 20px;
+    margin: 0;
+}
+
+.sidebar6 li {
+    margin-bottom: 20px;
+}
+
+.sidebar6 label.links_name {
+    display: block;
+    font-size: 15px;
+    font-weight: 500;
+    color: #ffffff;
+    margin-bottom: 6px;
+}
+
+.sidebar6 input[type="text"],
+.sidebar6 input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    background-color: #ffffff;
+    color: #11101d;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    transition: 0.2s;
+}
+
+.sidebar6 input::placeholder {
+    color: #aaa;
+}
+
+.sidebar6 input:focus {
+    box-shadow: 0 0 6px #1d8cf8;
+}
+
+.sidebar6 button {
+    padding: 10px;
+    width: 100%;
+    background-color: #1d8cf8;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar6 button:hover {
+    background-color: #1261c3;
+}

@@ -1,0 +1,105 @@
+.sidebar5 {
+    width: 380px;
+    max-width: 80vw;
+    max-height: 100vh;
+    /* ✅ Prevent vertical overflow */
+    overflow-y: auto;
+    /* ✅ Enable vertical scroll */
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    /* ✅ Smooth mobile scrolling */
+
+    box-sizing: border-box;
+    background: #11101d;
+    position: fixed;
+    top: 0;
+    left: 78px;
+    display: none;
+    z-index: 100;
+    transition: left 0.3s ease, top 0.3s ease;
+    padding: 20px;
+    border-top-right-radius: 20px;
+}
+
+.sidebar5 * {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* ✅ Mobile view override */
+@media (max-width: 480px) {
+    .sidebar5 {
+        width: calc(100vw - 12px);
+        /* leave space on right side */
+        left: 0;
+        border-top-right-radius: 20px;
+        /* ✅ Keep only top-right corner rounded */
+        border-top-left-radius: 0;
+        /* ensure no left rounding */
+        margin-right: 0;
+        /* no side margin needed */
+    }
+}
+
+.sidebar5::-webkit-scrollbar {
+    display: none;
+}
+
+.sidebar5.show {
+    display: block;
+}
+
+/* .sidebar5 li {
+    border: 2px solid white;
+}
+
+.sidebar5 li:hover {
+    background-color: #fff;
+    color: #11101d;
+}
+
+.sidebar5 li i {
+    height: 50px;
+    line-height: 50px;
+    font-size: 18px;
+    border-radius: 12px;
+}
+
+.sidebar5 a {
+    color: #fff;
+} */
+
+.sidebar5 .nav-list {
+    padding: 20px;
+}
+
+.sidebar5 .nav-list li {
+    display: block;
+    width: 100%;
+    background-color: #11101d;
+    color: #f0f0f0;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar5 .nav-list li:hover {
+    background-color: #f0f0f0;
+    color: #11101d;
+    transform: scale(1.02);
+}
+
+.sidebar5 .nav-list li a {
+    display: flex;
+    align-items: center;
+    color: inherit;
+    text-decoration: none;
+}
+
+.sidebar5 .nav-list li i {
+    margin-right: 10px;
+    font-size: 18px;
+}

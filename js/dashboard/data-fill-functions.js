@@ -11,9 +11,10 @@ export async function fillProfileFieldsFromSession() {
     const city = sessionStorage.getItem("city");
     const uid = sessionStorage.getItem("uid");
     const homeId = sessionStorage.getItem("homeId");
+    const member_type = sessionStorage.getItem("role");
 
     // 🔍 Check for missing critical fields
-    if (!email || !uid || !homeId) {
+    if (!email || !uid || !homeId || !member_type) {
         console.warn("❌ Essential profile session data missing. Logging out...");
         await performLogout(); // 🔁 Force logout
         return;
@@ -25,10 +26,11 @@ export async function fillProfileFieldsFromSession() {
         document.getElementById("sidebar-username").innerText = firstName || "User";
         document.getElementById("profile-lasttname").value = lastName || "";
         document.getElementById("profile-mobile").value = mobile || "";
-        document.getElementById("profile-email").value = email || "";
+        document.getElementById("profile-email").value = email;
         document.getElementById("profile-city").value = city || "";
-        document.getElementById("profile-uid-not-editable").value = uid || "";
-        document.getElementById("profile-homeid-not-editable").value = homeId || "";
+        document.getElementById("profile-uid-not-editable").value = uid;
+        document.getElementById("profile-homeid-not-editable").value = homeId;
+        document.getElementById("profile-Role").value = member_type;
     } catch (err) {
         console.error("❌ Error filling profile fields:", err);
 
@@ -73,9 +75,44 @@ export function fillWiFiFieldsFromSession() {
 
 }
 
+export function fillMemberListSidebarFromSession() {
+    const memberList = JSON.parse(sessionStorage.getItem("homeUsers") || "{}");
 
+    const adminContainer = document.getElementById("admin-list-container");
+    const memberWrapper = document.getElementById("member-scroll-wrapper");
 
+    // Clear any existing content
+    adminContainer.innerHTML = "";
+    memberWrapper.innerHTML = "";
 
+    if (!memberList || Object.keys(memberList).length === 0) {
+        console.warn("⚠️ No user list found in sessionStorage.");
+        return;
+    }
+
+    for (const uid in memberList) {
+        const user = memberList[uid];
+        const name = user.firstName || "(No Name)";
+        const email = user.email || "(No Email)";
+        const role = user.role || "unknown";
+
+        const card = document.createElement("div");
+        card.className = "card-style";
+        card.innerHTML = `
+            ${name} : <br/>
+            ${email}<br/>
+        `;
+        // card.innerHTML = `${name} : <br/>${email}<br/>(${role})`;
+
+        if (role === "admin") {
+            adminContainer.appendChild(card);
+        } else {
+            memberWrapper.appendChild(card);
+        }
+    }
+
+    console.log("✅ Member list sidebar populated from sessionStorage.");
+}
 
 
 export function getWiFiFormData() {

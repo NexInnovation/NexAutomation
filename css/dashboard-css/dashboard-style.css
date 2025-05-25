@@ -106,6 +106,8 @@ html {
     /* border: 2px solid white; */
     margin-top: 20px;
     height: 100%;
+
+
 }
 
 .sidebar li {
@@ -363,11 +365,30 @@ html {
     opacity: 0;
 }
 
-/* .sidebar li.submenu-open a,
-.sidebar li.submenu-open a .links_name {
-    border-radius: 0;
-    width: 100px;
-    outline: 5px solid #E4E9F7;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-} */
+
+/* ------------ */
+.sidebar .nav-list {
+    margin-top: 20px;
+    height: calc(100% - 90px);
+    /* Adjust height to exclude logo + logout area */
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 80px;
+    /* ✅ Reserve space at bottom for logout button */
+    scrollbar-width: none;
+    /* Firefox: hide scrollbar */
+}
+
+/* Chrome, Safari: hide scrollbar */
+.sidebar .nav-list::-webkit-scrollbar {
+    display: none;
+}
+
+.sidebar .nav-list::-webkit-scrollbar-track {
+    background: #11101D;
+}
+
+.sidebar .nav-list::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+}

@@ -8,10 +8,17 @@
     <link rel="stylesheet" href="css/dashboard-css/dashboard-style.css" />
     <link rel="stylesheet" href="css/dashboard-css/dashboard-style2.css" />
     <link rel="stylesheet" href="css/dashboard-css/dashboard-style3.css" />
+    <link rel="stylesheet" href="css/dashboard-css/dashboard-style5.css" />
+    <link rel="stylesheet" href="css/dashboard-css/dashboard-style6.css" />
+    <link rel="stylesheet" href="css/dashboard-css/dashboard-style7.css" />
     <link rel="stylesheet" href="css/dashboard-css/dashboard-setting.css" />
     <link rel="stylesheet" href="css/dashboard-css/dashboard-button.css" />
+
     <!-- Boxicons CDN Link -->
     <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 
@@ -22,13 +29,6 @@
             <i class="bx bx-menu" id="btn"></i>
         </div>
         <ul class="nav-list">
-            <!-- <li>
-                <a href="#">
-                    <i class="bx bx-user"></i>
-                    <span class="links_name">Profile</span>
-                </a>
-                <span class="tooltip">Profile</span>
-            </li> -->
             <li id="profile-btn">
                 <a href="#">
                     <i class="bx bx-user"></i>
@@ -39,10 +39,25 @@
 
             <li id="settings-btn">
                 <a href="#">
-                    <i class="bx bx-cog"></i>
+                    <i class="bx bx-wifi"></i>
                     <span class="links_name">Setting</span>
                 </a>
                 <span class="tooltip">Setting</span>
+            </li>
+            <li id="room-btn">
+                <a href="#">
+                    <i class="bx bx-home-alt"></i>
+                    <span class="links_name">Rooms</span>
+                </a>
+                <span class="tooltip">Rooms</span>
+            </li>
+
+            <li id="add-menu-btn">
+                <a href="#">
+                    <i class="bx bx-cog"></i>
+                    <span class="links_name">Add Menu</span>
+                </a>
+                <span class="tooltip">Add</span>
             </li>
             <li class="profile">
                 <div class="profile-details">
@@ -100,12 +115,17 @@
 
                 <li>
                     <label class="links_name">Email</label>
-                    <input type="email" id="profile-email" placeholder="Enter Email" />
+                    <input type="email" id="profile-email" placeholder="Enter Email" readonly />
                 </li>
 
                 <li>
                     <label class="links_name">City</label>
                     <input type="text" id="profile-city" placeholder="Enter City" />
+                </li>
+
+                <li>
+                    <label class="links_name">Role</label>
+                    <input type="text" id="profile-Role" placeholder="Role" readonly />
                 </li>
 
                 <li>
@@ -135,12 +155,99 @@
         </ul>
     </div>
 
+    <!-- room selection -->
+    <div id="sidebar4">
+    </div>
+
+    <!-- add button -->
+    <div class="sidebar5">
+        <ul class="nav-list">
+            <li id="add-member-btn">
+                <a href="#">
+                    <i class="bx bx-user"></i>
+                    <span class="links_name">Add Member</span>
+                </a>
+                <!-- <span class="tooltip">Profile</span> -->
+            </li>
+            <li id="list-member-btn">
+                <a href="#">
+                    <i class="bx bx-user"></i>
+                    <span class="links_name">List Member</span>
+                </a>
+                <!-- <span class="tooltip">Profile</span> -->
+            </li>
+            <li id="add-device-btn">
+                <a href="#">
+                    <i class="bx bx-cog"></i>
+                    <span class="links_name">Add Device</span>
+                </a>
+                <!-- <span class="tooltip">Setting</span> -->
+            </li>
+        </ul>
+    </div>
+
+    <!-- add member button -->
+    <div class="sidebar6">
+        <ul>
+            <li>
+                <label class="links_name">Add Member</label>
+            </li>
+
+            <form id="add-member-form">
+                <li>
+                    <label class="links_name">Name</label>
+                    <input type="text" id="mfname" placeholder="Enter Member First Name" />
+                </li>
+                <li>
+                    <label class="links_name">Email</label>
+                    <input type="text" id="memail" placeholder="Enter Member Email" />
+                </li>
+                <li>
+                    <label class="links_name">Password</label>
+                    <div class="uid-wrapper-flex">
+                        <input type="password" id="mpassword" placeholder="Enter Member Password" />
+                        <i class='bx bx-show uid-toggle' id="toggle-member-password-visibility"></i>
+                    </div>
+                </li>
+                <li>
+                    <button id="submit-member" type="submit">Submit</button>
+                </li>
+            </form>
+        </ul>
+    </div>
+
+
+    <!-- list member button -->
+    <div class="sidebar7">
+        <li><label class="links_name">Members List</label></li>
+        <fieldset>
+            <legend>Admin :</legend>
+            <ul id="member-list">
+                <li id="admin-list-container"></li>
+            </ul>
+        </fieldset>
+
+        <fieldset class="member-fieldset">
+            <legend>Member :</legend>
+            <!-- ✅ Move scrollable member section OUTSIDE the <ul> -->
+            <div id="member-scroll-wrapper"></div>
+        </fieldset>
+
+
+    </div>
+
+
+
+
+
 
 
     <section class="home-section">
-        <div class="text">NexInnovation</div>
 
-        <div class="fan"><!-- From Uiverse.io by Pradeepsaranbishnoi -->
+
+
+        <!-- From Uiverse.io by Pradeepsaranbishnoi -->
+        <!-- <div class="fan">
 
             <div class="container">
 
@@ -191,7 +298,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
 
     </section>
@@ -202,6 +309,7 @@
     <script type="module" src="js/dashboard/data-fill-functions.js"></script>
     <script type="module" src="js/dashboard/logic-functions.js"></script>
     <script type="module" src="js/dashboard/without-export-ui-function.js"></script>
+    <script type="module" src="js/dashboard/dynamic-member-list-show.js"></script>
 
     <!-- <script type="module" src="js/dashboard/firebase-init.js"></script>
     <script type="module" src="js/dashboard/utils.js"></script>

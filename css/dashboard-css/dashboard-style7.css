@@ -1,0 +1,109 @@
+.sidebar7 {
+    display: none;
+    flex-direction: column;
+    height: 100vh;
+    min-height: 0;
+    width: 380px;
+    max-width: 80vw;
+    background: #11101d;
+    position: fixed;
+    top: 0;
+    left: 78px;
+    z-index: 100;
+    padding: 24px 20px;
+    border-top-right-radius: 20px;
+    overflow: hidden;
+}
+
+.sidebar7.show {
+    display: flex;
+}
+
+.sidebar7 label.links_name {
+    display: block;
+    font-size: 15px;
+    font-weight: 500;
+    color: #ffffff;
+    margin-bottom: 6px;
+    list-style-type: none;
+}
+
+.sidebar7 li {
+    list-style-type: none;
+}
+
+#member-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+#member-scroll-wrapper {
+    flex-grow: 1;
+    /* 📦 Take all remaining vertical space */
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-right: 4px;
+    margin-top: 12px;
+    /* padding-top: 10px; */
+    /* padding-bottom: 10px; */
+}
+
+#member-scroll-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+#member-scroll-wrapper {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* ✅ Member card style */
+.card-style {
+    /* background: #1d1b31; */
+    color: #ffffff;
+    /* border-radius: 12px; */
+    padding: 16px 20px;
+    font-size: 14px;
+    font-weight: 400;
+    /* border: 1.5px solid #ffffff33; */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* .card-style:hover {
+    margin: 10px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    color: #11101d;
+    transform: scale(1.01);
+} */
+
+#admin-list-container,
+#member-scroll-wrapper {
+    border: 1px solid white;
+    border-radius: 10px;
+}
+
+.sidebar7 fieldset {
+    color: #ffffff;
+    /* padding: 10px; */
+    /* margin: 0px; */
+    border: none;
+    padding-inline: 0;
+}
+
+/* ✅ ONLY the Member fieldset needs to scroll */
+.sidebar7 fieldset:last-of-type {
+    flex-grow: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.member-fieldset {
+    /* border: 1px solid red; */
+    margin-top: 10px;
+}

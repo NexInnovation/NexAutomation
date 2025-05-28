@@ -27,9 +27,6 @@ document.addEventListener("keydown", function (e) {
     if (e.key === "Enter") {
         const loginFormVisible = document.getElementById("login-form").style.display !== "none";
         const signupFormVisible = document.getElementById("signup-form").style.display !== "none";
-
-        // if (loginFormVisible) loginBtn.click(); // Simulate Login button click
-        // else if (signupFormVisible) signupBtn.click(); // Simulate Signup button click
         if (loginFormVisible) {
             setTimeout(() => loginBtn.click(), 50); // ✅ Let DOM update before click
         } else if (signupFormVisible) {

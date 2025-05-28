@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>NexInnovation</title>
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="css/dashboard-css/0.Dashboard.css">
+    <link rel="stylesheet" href="css/dashboard-css/1.MainHorizontalSidebar.css">
+    <link rel="stylesheet" href="css/dashboard-css/2.ProfilePanelSidebar.css">
+    <link rel="stylesheet" href="css/dashboard-css/3.RoomShowMain.css">
+    <link rel="stylesheet" href="css/dashboard-css/4.SettingMenu.css">
+    <link rel="stylesheet" href="css/dashboard-css/5.AddMember.SettingMenu.css">
+    <link rel="stylesheet" href="css/dashboard-css/6.MemberList.SettingMenu.css">
+    <link rel="stylesheet" href="css/dashboard-css/7.AddDevice.SettingMenu.css">
+    <link rel="stylesheet" href="css/dashboard-css/8.RoomShow.SettingMenu.css">
+    <link rel="stylesheet" href="css/dashboard-css/9.UpdateList.RoomList.SettingMenu.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+    <!-- Sidebar 1: Main Navigation -->
+    <div class="sidebar1" id="sidebar1">
+        <div class="logo-details">
+            <img src="img/NexInnovation low margin logo.png" class="logo-image" alt="Logo" />
+            <i class="bx bx-menu" id="open_btn"></i>
+        </div>
+        <ul class="nav-list">
+            <li id="profile-btn">
+                <a href="#">
+                    <i class="bx bx-user"></i>
+                    <span class="links_name">Profile</span>
+                </a>
+            </li>
+            <li id="room-btn"><a href="#">
+                    <i class="bx bx-home-alt"></i>
+                    <span class="links_name">Rooms</span>
+                </a>
+            </li>
+            <li id="settings-btn">
+                <a href="#">
+                    <i class="bx bx-cog"></i>
+                    <span class="links_name">Settings</span>
+                </a>
+            </li>
+            <li class="profile">
+                <div class="profile-details">
+                    <div class="name_job">
+                        <div class="name" id="sidebar-username">Loading...</div>
+                    </div>
+                </div>
+                <i class='bx bx-log-out' id="log_out"></i>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Sidebar 2: Profile Panel -->
+    <div class="sidebar2" id="sidebar2">
+        <ul class="nav-list">
+            <form id="profile-form">
+                <li><label class="links_name">Profile</label></li>
+                <li>
+                    <label class="links_name">Name</label>
+                    <div class="name-group">
+                        <input type="text" id="profile-firstname" placeholder="First Name" />
+                        <input type="text" id="profile-lasttname" placeholder="Last Name" />
+                    </div>
+                </li>
+                <li>
+                    <label class="links_name">Mobile Number</label>
+                    <input type="text" id="profile-mobile" placeholder="Enter Mobile Number" />
+                </li>
+                <li>
+                    <label class="links_name">Email</label>
+                    <input type="email" id="profile-email" placeholder="Enter Email" readonly />
+                </li>
+                <li>
+                    <label class="links_name">City</label>
+                    <input type="text" id="profile-city" placeholder="Enter City" />
+                </li>
+                <li>
+                    <label class="links_name">Role</label>
+                    <input type="text" id="profile-Role" placeholder="Role" readonly />
+                </li>
+                <li>
+                    <label class="links_name">UID</label>
+                    <div class="uid-wrapper-flex">
+                        <input type="password" id="profile-uid-not-editable" class="uid-input-flex" placeholder="UID"
+                            readonly />
+                        <i class='bx bx-show uid-toggle' id="toggle-uid-visibility"></i>
+                    </div>
+                </li>
+                <li>
+                    <label class="links_name">Home ID</label>
+                    <div class="uid-wrapper-flex">
+                        <input type="password" id="profile-homeid-not-editable" class="uid-input-flex"
+                            placeholder="Home ID" readonly />
+                        <i class='bx bx-show uid-toggle' id="toggle-hid-visibility"></i>
+                    </div>
+                </li>
+                <li>
+                    <button id="submit-profile" type="submit">Update</button>
+                </li>
+            </form>
+        </ul>
+    </div>
+
+    <!-- Sidebar 3: Room > Room Selection -->
+    <div class="sidebar3" id="sidebar3">
+        <ul id="room-list-container" class="nav-list">
+            <li><label class="links_name">Select Room</label></li>
+            <li class="no-room-msg" style="color: #ccc; font-size: 14px;">You have no room added</li>
+            <!-- JS will overwrite this -->
+        </ul>
+    </div>
+
+
+    <!-- Sidebar 4: Settings Options -->
+    <div class="sidebar4" id="sidebar4">
+        <ul class="nav-list">
+            <li id="add-member-btn"><a href="#">
+                    <i class="bx bx-user-plus"></i>
+                    <span class="links_name">Add Member</span>
+                </a>
+            </li>
+            <li id="list-member-btn"><a href="#">
+                    <i class="bx bx-group"></i>
+                    <span class="links_name">List Member</span>
+                </a></li>
+            <li id="add-device-btn"><a href="#">
+                    <i class="bx bx-plus-circle"></i>
+                    <span class="links_name">Add Device</span>
+                </a>
+            </li>
+            <li id="update-device-btn">
+                <a href="#">
+                    <i class="bx bx-edit-alt"></i>
+                    <span class="links_name">Update Device</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Sidebar 5: Add Member Form -->
+    <div class="sidebar5" id="sidebar5">
+        <ul class="nav-list">
+            <form id="add-member-form">
+                <li><label class="links_name">Add Member</label></li>
+                <li>
+                    <label class="links_name">Name</label>
+                    <input type="text" id="mfname" placeholder="First Name" />
+                </li>
+                <li>
+                    <label class="links_name">Email</label>
+                    <input type="text" id="memail" placeholder="Email" />
+                </li>
+                <li>
+                    <label class="links_name">Password</label>
+                    <input type="password" id="mpassword" placeholder="Password" />
+                </li>
+                <li>
+                    <button type="submit">Submit</button>
+                </li>
+            </form>
+        </ul>
+    </div>
+
+    <!-- Sidebar 6: Member List -->
+    <div class="sidebar6" id="sidebar6">
+        <fieldset>
+            <legend>Admin:</legend>
+            <ul id="admin-list"></ul>
+        </fieldset>
+        <fieldset>
+            <legend>Members:</legend>
+            <ul id="member-list"></ul>
+        </fieldset>
+    </div>
+
+    <!-- Sidebar 7: Add Device Form -->
+    <div class="sidebar7" id="sidebar7">
+        <ul class="nav-list">
+            <form id="add-device-form">
+                <li><label class="links_name">Add Device</label></li>
+                <li>
+                    <label class="links_name">Room Name</label>
+                    <input type="text" id="device-room-name" />
+                </li>
+                <li>
+                    <label class="links_name">Number of Channels</label>
+                    <select id="device-channel-count">
+                        <option value>Select</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </li>
+                <div id="channel-name-fields"></div>
+                <li>
+                    <label class="links_name">Wi-Fi SSID</label>
+                    <input type="text" id="device-wifi-ssid" />
+                </li>
+                <li>
+                    <label class="links_name">Wi-Fi Password</label>
+                    <input type="text" id="device-wifi-password" />
+                </li>
+                <li>
+                    <button type="submit">Add Device</button>
+                </li>
+            </form>
+        </ul>
+    </div>
+
+    <!-- Sidebar 8: Room List for Update -->
+    <div class="sidebar8" id="sidebar8">
+        <ul class="nav-list">
+            <li><label class="links_name">Select Room to Update</label></li>
+            <div id="update-room-list"></div>
+        </ul>
+    </div>
+
+    <!-- Sidebar 9: Update Device Form -->
+    <div class="sidebar9" id="sidebar9">
+        <ul class="nav-list">
+            <form id="update-device-form">
+                <li><label class="links_name">Update Device</label></li>
+                <li>
+                    <label class="links_name">Room Name</label>
+                    <input type="text" id="update-device-room-name" />
+                </li>
+                <li>
+                    <label class="links_name">Number of Channels</label>
+                    <select id="update-device-channel-count">
+                        <option value>Select</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </li>
+                <div id="update-channel-name-fields"></div>
+                <li>
+                    <label class="links_name">Wi-Fi SSID</label>
+                    <input type="text" id="update-device-wifi-ssid" />
+                </li>
+                <li>
+                    <label class="links_name">Wi-Fi Password</label>
+                    <input type="text" id="update-device-wifi-password" />
+                </li>
+                <li>
+                    <button type="submit">Update Device</button>
+                </li>
+            </form>
+        </ul>
+    </div>
+
+    <section class="home-section"></section>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script type="module" src="js/dashboard2/ui/toggle_visibility_to_all_panel.js"></script>
+    <script type="module" src="js/dashboard2/ui/escape_function_close_panel.js"></script>
+    <script type="module" src="js/dashboard2/ui/outsideClick_function_close_panel.js"></script>
+    <script type="module" src="js/dashboard2/fdb-logic functions/logout_function.js"></script>
+    <script type="module" src="js/firebase-module.js"></script>
+    <script type="module" src="js/db-paths.js"></script>
+
+</body>
+
+</html>

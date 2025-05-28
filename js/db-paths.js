@@ -12,5 +12,9 @@ export const DB_PATHS = {
 
     // Automation device path
     deviceRelay: (homeId, deviceId, relayId) => `automation/${homeId}/automation/${deviceId}/${relayId}`,
-    deviceMeta: (homeId, deviceId) => `automation/${homeId}/automation/${deviceId}/deviceData`
+    deviceMeta: (homeId, deviceId) => `automation/${homeId}/automation/${deviceId}/deviceData`,
+
+    deviceWiFiConfig: (homeId, deviceId) => `automation/${homeId}/automation/${deviceId}/wifi-config`,
+    deviceRelayRoot: (homeId, deviceId) => `automation/${homeId}/automation/${deviceId}`,
+    deviceLastNumberInHome: (homeId) => `automation/${homeId}/home-config/lastDeviceNumber`
 };

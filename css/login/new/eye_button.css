@@ -1,0 +1,41 @@
+.input-container {
+    width: 100%;
+    max-width: 340px;
+    margin: 0 auto 18px auto;
+    /* ✅ center horizontally */
+}
+
+.input-container input {
+    max-width: 340px;
+    /* ✅ Cap input width like logo/button */
+    width: 100%;
+    height: 42px;
+    /* ✅ Fix height */
+    padding: 0 16px;
+    padding-right: 42px;
+    /* For eye icon */
+    border-radius: 15px;
+    font-size: 15px;
+    border: none;
+    background-color: white;
+    transition: all 0.3s ease;
+    box-shadow: none;
+    background-image: none;
+    display: block;
+    margin: 0 auto;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+    color: #333;
+}

@@ -1,4 +1,4 @@
-/* .sidebar2 {
+/* .sidebar5 {
     position: fixed;
     top: 0;
     left: 78px;
@@ -11,7 +11,7 @@
     transition: left 0.3s ease;
 } */
 
-.sidebar2 {
+.sidebar5 {
     width: 380px;
     max-width: 80vw;
     max-height: 100vh;
@@ -34,14 +34,14 @@
     border-top-right-radius: 20px;
 }
 
-.sidebar2 * {
+.sidebar5 * {
     max-width: 100%;
     /* box-sizing: border-box; */
 }
 
 /* ✅ Mobile view override */
 @media (max-width: 480px) {
-    .sidebar2 {
+    .sidebar5 {
         width: calc(100vw - 12px);
         /* leave space on right side */
         left: 0;
@@ -54,33 +54,33 @@
     }
 }
 
-.sidebar2::-webkit-scrollbar {
+.sidebar5::-webkit-scrollbar {
     display: none;
 }
 
-.sidebar2.show {
+.sidebar5.show {
     display: block;
 }
 
-.sidebar2 li {
+.sidebar5 li {
     list-style: none;
 }
 
-.sidebar2 ul {
+.sidebar5 ul {
     list-style: none;
 }
 
-.sidebar2 ul {
+.sidebar5 ul {
     list-style: none;
     padding: 20px;
     margin: 0;
 }
 
-.sidebar2 li {
+.sidebar5 li {
     margin-bottom: 20px;
 }
 
-.sidebar2 label.links_name {
+.sidebar5 label.links_name {
     display: block;
     font-size: 15px;
     font-weight: 500;
@@ -88,8 +88,8 @@
     margin-bottom: 6px;
 }
 
-.sidebar2 input[type="text"],
-.sidebar2 input[type="password"] {
+.sidebar5 input[type="text"],
+.sidebar5 input[type="password"] {
     width: 100%;
     padding: 10px;
     border-radius: 6px;
@@ -102,15 +102,15 @@
     transition: 0.2s;
 }
 
-.sidebar2 input::placeholder {
+.sidebar5 input::placeholder {
     color: #aaa;
 }
 
-.sidebar2 input:focus {
+.sidebar5 input:focus {
     box-shadow: 0 0 6px #1d8cf8;
 }
 
-.sidebar2 button {
+.sidebar5 button {
     padding: 10px;
     width: 100%;
     background-color: #1d8cf8;
@@ -123,6 +123,6 @@
     transition: background-color 0.3s ease;
 }
 
-.sidebar2 button:hover {
+.sidebar5 button:hover {
     background-color: #1261c3;
 }

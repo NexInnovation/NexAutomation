@@ -1,4 +1,4 @@
-.sidebar7 {
+.sidebar6 {
     display: none;
     flex-direction: column;
     height: 100vh;
@@ -15,11 +15,11 @@
     overflow: hidden;
 }
 
-.sidebar7.show {
+.sidebar6.show {
     display: flex;
 }
 
-.sidebar7 label.links_name {
+.sidebar6 label.links_name {
     display: block;
     font-size: 15px;
     font-weight: 500;
@@ -28,7 +28,7 @@
     list-style-type: none;
 }
 
-.sidebar7 li {
+.sidebar6 li {
     list-style-type: none;
 }
 
@@ -87,7 +87,7 @@
     border-radius: 10px; */
 }
 
-.sidebar7 fieldset {
+.sidebar6 fieldset {
     color: #ffffff;
     /* padding: 10px; */
     /* margin: 0px; */
@@ -97,7 +97,7 @@
 }
 
 /* ✅ ONLY the Member fieldset needs to scroll */
-.sidebar7 fieldset:last-of-type {
+.sidebar6 fieldset:last-of-type {
     flex-grow: 1;
     min-height: 0;
     display: flex;
@@ -109,7 +109,7 @@
     margin-top: 10px;
 }
 
-.sidebar7 fieldset {
+.sidebar6 fieldset {
     border: 1px solid #4b4b6b;
     border-radius: 8px;
     padding: 15px;
@@ -117,7 +117,7 @@
     background: #1e1c2d;
 }
 
-.sidebar7 legend {
+.sidebar6 legend {
     font-weight: 600;
     font-size: 14px;
     padding: 0 10px;

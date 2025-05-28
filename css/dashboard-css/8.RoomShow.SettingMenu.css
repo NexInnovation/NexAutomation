@@ -1,0 +1,7 @@
+.sidebar8 {
+    display: none;
+}
+
+.sidebar8.show {
+    display: block;
+}

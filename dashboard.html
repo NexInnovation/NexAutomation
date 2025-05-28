@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/dashboard-css/dashboard-style5.css" />
     <link rel="stylesheet" href="css/dashboard-css/dashboard-style6.css" />
     <link rel="stylesheet" href="css/dashboard-css/dashboard-style7.css" />
+    <link rel="stylesheet" href="css/dashboard-css/dashboard-style8.css" />
     <link rel="stylesheet" href="css/dashboard-css/dashboard-setting.css" />
     <link rel="stylesheet" href="css/dashboard-css/dashboard-button.css" />
 
@@ -68,29 +69,6 @@
                 </div>
                 <i class='bx bx-log-out' id="log_out"></i>
             </li>
-        </ul>
-    </div>
-
-    <div class="sidebar2">
-        <ul class="nav-list">
-            <li>
-                <label class="links_name">Wi-Fi Setup</label>
-            </li>
-
-            <!-- 🔽 Wrap in a form -->
-            <form id="wifi-form">
-                <li>
-                    <label class="links_name">SSID</label>
-                    <input type="text" id="ssid" placeholder="Enter SSID" />
-                </li>
-                <li>
-                    <label class="links_name">Password</label>
-                    <input type="text" id="password" placeholder="Enter Password" />
-                </li>
-                <li>
-                    <button id="submit-wifi" type="submit">Submit</button>
-                </li>
-            </form>
         </ul>
     </div>
 
@@ -232,9 +210,54 @@
             <!-- ✅ Move scrollable member section OUTSIDE the <ul> -->
             <div id="member-scroll-wrapper"></div>
         </fieldset>
-
-
     </div>
+
+    <!-- Add Device Sidebar -->
+    <div class="sidebar8">
+        <ul class="nav-list">
+            <form id="add-device-form">
+                <li>
+                    <label class="links_name">Add Device</label>
+                </li>
+
+                <li>
+                    <label class="links_name">Room Name</label>
+                    <input type="text" id="device-room-name" placeholder="e.g. Living Room" required />
+                </li>
+
+                <li>
+                    <label class="links_name">Number of Channels</label>
+                    <select id="device-channel-count" required>
+                        <option value="">Select</option>
+                        <option value="1">1 Channel</option>
+                        <option value="2">2 Channels</option>
+                        <option value="3">3 Channels</option>
+                        <option value="4">4 Channels</option>
+                        <option value="5">5 Channels</option>
+                        <option value="6">6 Channels</option>
+                    </select>
+                </li>
+
+                <!-- Placeholder for channel name inputs -->
+                <div id="channel-name-fields"></div>
+
+                <li>
+                    <label class="links_name">Wi-Fi SSID</label>
+                    <input type="text" id="device-wifi-ssid" placeholder="Wi-Fi SSID" required />
+                </li>
+
+                <li>
+                    <label class="links_name">Wi-Fi Password</label>
+                    <input type="password" id="device-wifi-password" placeholder="Wi-Fi Password" required />
+                </li>
+
+                <li>
+                    <button type="submit" id="submit-add-device">Add Device</button>
+                </li>
+            </form>
+        </ul>
+    </div>
+
 
 
 
@@ -310,6 +333,7 @@
     <script type="module" src="js/dashboard/logic-functions.js"></script>
     <script type="module" src="js/dashboard/without-export-ui-function.js"></script>
     <script type="module" src="js/dashboard/dynamic-member-list-show.js"></script>
+    <script type="module" src="js/dashboard/dynamic-add-room-input-box.js"></script>
 
     <!-- <script type="module" src="js/dashboard/firebase-init.js"></script>
     <script type="module" src="js/dashboard/utils.js"></script>

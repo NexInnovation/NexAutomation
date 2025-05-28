@@ -1,48 +1,4 @@
-/* Google Font Link */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
-
-body,
-html {
-    width: 100%;
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
-    /* ✅ Allows vertical scroll */
-    -webkit-overflow-scrolling: touch;
-    /* ✅ Smooth mobile scroll */
-}
-
-body,
-html {
-    width: 100%;
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
-    /* ✅ Allows vertical scroll */
-    -webkit-overflow-scrolling: touch;
-    /* ✅ Smooth mobile scroll */
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
-}
-
-@media (max-height: 420px) {
-
-    body,
-    html {
-        overflow-y: auto;
-    }
-
-    body::-webkit-scrollbar {
-        display: none;
-    }
-}
-
-.sidebar {
+.sidebar1 {
     position: fixed;
     left: 0;
     top: 0;
@@ -54,16 +10,16 @@ html {
     transition: all 0.5s ease;
 }
 
-.sidebar.open {
+.sidebar1.open {
     width: 250px;
 }
 
-/* .sidebar .logo-details .icon {
+/* .sidebar1 .logo-details .icon {
   opacity: 0;
   transition: all 0.5s ease;
 } */
 
-/* .sidebar .logo-details .logo_name {
+/* .sidebar1 .logo-details .logo_name {
   color: #fff;
   font-size: 20px;
   font-weight: 600;
@@ -71,12 +27,12 @@ html {
   transition: all 0.5s ease;
 } */
 
-.sidebar.open .logo-details .icon,
-.sidebar.open .logo-details .logo_name {
+.sidebar1.open .logo-details .icon,
+.sidebar1.open .logo-details .logo_name {
     opacity: 1;
 }
 
-.sidebar .logo-details #btn {
+.sidebar1 .logo-details #open_btn {
     position: absolute;
     top: 50%;
     right: 0;
@@ -89,11 +45,11 @@ html {
     transition: all 0.5s ease;
 }
 
-.sidebar.open .logo-details #btn {
+.sidebar1.open .logo-details #open_btn {
     text-align: right;
 }
 
-.sidebar i {
+.sidebar1 i {
     color: #fff;
     height: 60px;
     min-width: 50px;
@@ -102,7 +58,7 @@ html {
     line-height: 60px;
 }
 
-.sidebar .nav-list {
+.sidebar1 .nav-list {
     /* border: 2px solid white; */
     margin-top: 20px;
     height: 100%;
@@ -110,13 +66,13 @@ html {
 
 }
 
-.sidebar li {
+.sidebar1 li {
     position: relative;
     margin: 8px 0;
     list-style: none;
 }
 
-.sidebar li .tooltip {
+.sidebar1 li .tooltip {
     position: absolute;
     top: -20px;
     left: calc(100% + 15px);
@@ -135,7 +91,7 @@ html {
 
 
 
-.sidebar li:hover .tooltip {
+.sidebar1 li:hover .tooltip {
     opacity: 1;
     pointer-events: auto;
     transition: all 0.4s ease;
@@ -143,11 +99,11 @@ html {
     transform: translateY(-50%);
 }
 
-.sidebar.open li .tooltip {
+.sidebar1.open li .tooltip {
     display: none;
 }
 
-.sidebar input {
+.sidebar1 input {
     font-size: 15px;
     color: #FFF;
     font-weight: 400;
@@ -161,13 +117,13 @@ html {
     background: #1d1b31;
 }
 
-.sidebar.open input {
+.sidebar1.open input {
     padding: 0 20px 0 50px;
     width: 100%;
 }
 
 
-.sidebar li a {
+.sidebar1 li a {
     display: flex;
     height: 100%;
     width: 100%;
@@ -178,11 +134,11 @@ html {
     background: #11101D;
 }
 
-.sidebar li a:hover {
+.sidebar1 li a:hover {
     background: #FFF;
 }
 
-.sidebar li a .links_name {
+.sidebar1 li a .links_name {
     color: #fff;
     font-size: 15px;
     font-weight: 400;
@@ -192,25 +148,25 @@ html {
     transition: 0.4s;
 }
 
-.sidebar.open li a .links_name {
+.sidebar1.open li a .links_name {
     opacity: 1;
     pointer-events: auto;
 }
 
-.sidebar li a:hover .links_name,
-.sidebar li a:hover i {
+.sidebar1 li a:hover .links_name,
+.sidebar1 li a:hover i {
     transition: all 0.5s ease;
     color: #11101D;
 }
 
-.sidebar li i {
+.sidebar1 li i {
     height: 50px;
     line-height: 50px;
     font-size: 18px;
     border-radius: 12px;
 }
 
-.sidebar li.profile {
+.sidebar1 li.profile {
     position: fixed;
     height: 60px;
     width: 78px;
@@ -222,17 +178,17 @@ html {
     overflow: hidden;
 }
 
-.sidebar.open li.profile {
+.sidebar1.open li.profile {
     width: 250px;
 }
 
-.sidebar li .profile-details {
+.sidebar1 li .profile-details {
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
 }
 
-.sidebar li img {
+.sidebar1 li img {
     height: 45px;
     width: 45px;
     object-fit: cover;
@@ -240,19 +196,19 @@ html {
     margin-right: 10px;
 }
 
-.sidebar li.profile .name,
-.sidebar li.profile .job {
+.sidebar1 li.profile .name,
+.sidebar1 li.profile .job {
     font-size: 15px;
     font-weight: 400;
     color: #fff;
     white-space: nowrap;
 }
 
-.sidebar li.profile .job {
+.sidebar1 li.profile .job {
     font-size: 12px;
 }
 
-.sidebar .profile #log_out {
+.sidebar1 .profile #log_out {
     position: absolute;
     top: 50%;
     right: 0;
@@ -265,7 +221,7 @@ html {
     transition: all 0.5s ease;
 }
 
-.sidebar.open .profile #log_out {
+.sidebar1.open .profile #log_out {
     width: 50px;
     background: none;
 }
@@ -281,7 +237,7 @@ html {
     z-index: 2;
 }
 
-.sidebar.open~.home-section {
+.sidebar1.open~.home-section {
     left: 250px;
     width: calc(100% - 250px);
 }
@@ -295,12 +251,12 @@ html {
 }
 
 @media (max-width: 420px) {
-    .sidebar li .tooltip {
+    .sidebar1 li .tooltip {
         display: none;
     }
 }
 
-.sidebar .logo-details {
+.sidebar1 .logo-details {
     /* border: 2px solid white; */
     height: 90px;
     display: flex;
@@ -329,8 +285,8 @@ html {
     object-fit: contain;
 }
 
-/* When sidebar is collapsed */
-.sidebar:not(.open) .logo-image {
+/* When sidebar1 is collapsed */
+.sidebar1:not(.open) .logo-image {
     opacity: 0;
     transform: scale(0);
 }
@@ -339,7 +295,7 @@ html {
 
 /*-------------*/
 
-.sidebar li.submenu-open a::after {
+.sidebar1 li.submenu-open a::after {
     content: "";
     position: absolute;
     top: 50%;
@@ -352,22 +308,22 @@ html {
     border-radius: 2px;
 }
 
-.sidebar li a {
+.sidebar1 li a {
     position: relative;
 }
 
-.sidebar li.submenu-open a::after {
+.sidebar1 li.submenu-open a::after {
     opacity: 1;
     transition: opacity 0.3s ease;
 }
 
-.sidebar li a::after {
+.sidebar1 li a::after {
     opacity: 0;
 }
 
 
 /* ------------ */
-.sidebar .nav-list {
+.sidebar1 .nav-list {
     margin-top: 20px;
     height: calc(100% - 90px);
     /* Adjust height to exclude logo + logout area */
@@ -380,15 +336,15 @@ html {
 }
 
 /* Chrome, Safari: hide scrollbar */
-.sidebar .nav-list::-webkit-scrollbar {
+.sidebar1 .nav-list::-webkit-scrollbar {
     display: none;
 }
 
-.sidebar .nav-list::-webkit-scrollbar-track {
+.sidebar1 .nav-list::-webkit-scrollbar-track {
     background: #11101D;
 }
 
-.sidebar .nav-list::-webkit-scrollbar-thumb {
+.sidebar1 .nav-list::-webkit-scrollbar-thumb {
     background-color: #888;
     border-radius: 10px;
 }

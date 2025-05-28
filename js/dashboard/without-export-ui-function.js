@@ -4,12 +4,14 @@ const sidebar3 = document.querySelector(".sidebar3");
 const sidebar5 = document.querySelector(".sidebar5");
 const sidebar6 = document.querySelector(".sidebar6");
 const sidebar7 = document.querySelector(".sidebar7");
+const sidebar8 = document.querySelector(".sidebar8");
 const sidebarBtn = document.getElementById("btn");
 const settingsBtn = document.getElementById("settings-btn");
 const profileBtn = document.getElementById("profile-btn");
 const addmenuBtn = document.getElementById("add-menu-btn");
 const addmemberBtn = document.getElementById("add-member-btn");
 const showMemberListBtn = document.getElementById("list-member-btn");
+const adddeviceBtn = document.getElementById("add-device-btn");
 
 import {
     getWiFiFormData,
@@ -157,10 +159,14 @@ addmenuBtn.addEventListener("click", () => {
     }
 
     if (sidebar7.classList.contains("show")) {
+        sidebar7.classList.remove("show");
         addmenuBtn.classList.remove("submenu-open");
     }
 
-
+    if (sidebar8.classList.contains("show")) {
+        sidebar8.classList.remove("show");
+        addmenuBtn.classList.remove("submenu-open");
+    }
 
     // 🔁 Toggle profile sidebar
     sidebar5.classList.toggle("show");
@@ -225,6 +231,27 @@ showMemberListBtn.addEventListener("click", () => {
 
     // testLogAllMembers();
     // loadMemberListToSidebar();
+
+});
+
+// open sidebar6 add member sidebar and close sidebar5
+adddeviceBtn.addEventListener("click", () => {
+    // const wasOpen = sidebar5.classList.contains("show");
+
+    // 🔁 Toggle profile sidebar
+    sidebar8.classList.add("show");
+    // addmenuBtn.classList.toggle("submenu-open");
+
+    // ❌ Close the other (setting) sidebar
+    sidebar5.classList.remove("show");
+    // addmenuBtn.classList.remove("submenu-open");
+
+    // ❌ Close the other (profile) sidebar
+    // sidebar3.classList.remove("show");
+    // profileBtn.classList.remove("submenu-open");
+
+    // ✅ Adjust profile sidebar position
+    adjustSidebar8();
 
 });
 
@@ -307,6 +334,10 @@ document.addEventListener("click", (e) => {
         sidebar7.classList.remove("show");
         addmenuBtn.classList.remove("submenu-open");
     }
+    if (sidebar8.classList.contains("show") && !sidebar8.contains(e.target) && !adddeviceBtn.contains(e.target)) {
+        sidebar8.classList.remove("show");
+        addmenuBtn.classList.remove("submenu-open");
+    }
 });
 
 document.addEventListener("keydown", (e) => {
@@ -384,6 +415,11 @@ document.addEventListener("keydown", (e) => {
             sidebar7.classList.remove("show");
             addmenuBtn.classList.remove("submenu-open");
         }
+
+        if (sidebar8.classList.contains("show")) {
+            sidebar8.classList.remove("show");
+            addmenuBtn.classList.remove("submenu-open");
+        }
     }
 });
 
@@ -428,6 +464,14 @@ export function adjustSidebar7() {
     const top = addmenuBtn.getBoundingClientRect().top + window.scrollY;
     sidebar7.style.top = `${top}px`;
     sidebar7.style.height = `${window.innerHeight - top - 10}px`;
+}
+
+export function adjustSidebar8() {
+    if (!sidebar8.classList.contains("show")) return;
+    sidebar8.style.left = sidebar.classList.contains("open") ? "255px" : "83px";
+    const top = addmenuBtn.getBoundingClientRect().top + window.scrollY;
+    sidebar8.style.top = `${top}px`;
+    sidebar8.style.height = `${window.innerHeight - top - 10}px`;
 }
 
 

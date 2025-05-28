@@ -1,0 +1,227 @@
+/* Font Setup */
+@font-face {
+    font-family: Poppins-Regular;
+    src: url('../../../fonts/poppins/Poppins-Regular.ttf');
+}
+
+@font-face {
+    font-family: Poppins-Medium;
+    src: url('../../../fonts/poppins/Poppins-Medium.ttf');
+}
+
+@font-face {
+    font-family: Poppins-Bold;
+    src: url('../../../fonts/poppins/Poppins-Bold.ttf');
+}
+
+@font-face {
+    font-family: Poppins-SemiBold;
+    src: url('../../../fonts/poppins/Poppins-SemiBold.ttf');
+}
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Poppins-Regular, sans-serif;
+}
+
+body,
+html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Background */
+.background {
+    background-image: url('../../../img/bg-01.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* Flipper Container */
+.flip-container {
+    width: 500px;
+    max-width: 90%;
+    perspective: 1000px;
+    margin: 80px auto;
+}
+
+.flipper {
+    width: 100%;
+    transform-style: preserve-3d;
+    transition: 0.8s;
+    position: relative;
+}
+
+/* Card Sides */
+.front,
+.back {
+    width: 100%;
+    backface-visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.back {
+    transform: rotateY(180deg);
+}
+
+/* Show Back */
+.flip-container.flipped .flipper {
+    transform: rotateY(180deg);
+}
+
+/* Card Box */
+.card {
+    background: rgba(255, 255, 255, 0.15);
+    /* ⬅️ transparent white */
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    padding: 40px 30px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    /* ⬅️ glassmorphism effect */
+    -webkit-backdrop-filter: blur(10px);
+    /* For Safari */
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+
+.logo:hover .logo-main {
+    opacity: 0;
+}
+
+.logo:hover .logo-hover {
+    opacity: 1;
+}
+
+/* Headings */
+h2 {
+    font-family: Poppins;
+    font-size: 35px;
+    margin-bottom: 25px;
+    color: white;
+}
+
+/* Input Fields */
+.input-container {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-container input {
+    width: 90%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s ease;
+}
+
+.input-container input:focus {
+    border-color: transparent;
+    outline: none;
+    position: relative;
+    z-index: 1;
+}
+
+.input-container input:focus::before {
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    z-index: -1;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #6f00ff, #00d2ff);
+    /* 💡 gradient here */
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Toggle Password Eye */
+.toggle-password {
+    position: absolute;
+    right: 8%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #888;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.toggle-password:hover {
+    color: #383838;
+}
+
+.remember-me-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    margin-bottom: 15px;
+    margin-left: 6%;
+    color: white;
+    font-size: 15px;
+    font-family: Poppins-Regular;
+}
+
+/* Action Button */
+.action-btn {
+    width: 100%;
+    max-width: 340px;
+    margin: 10px auto 0 auto;
+    /* ✅ center button */
+
+    padding: 12px;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    /* margin-top: 10px; */
+    font-weight: 500;
+    background: linear-gradient(to right, #00dbde 0%, #fc00ff 50%, #00dbde 100%);
+    background-size: 200% auto;
+    background-position: left center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    transition: background-position 0.5s ease, box-shadow 0.5s ease;
+}
+
+.action-btn:hover {
+    background-position: right center;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* Link Text */
+.link-text {
+    margin-top: 15px;
+    font-size: 16px;
+    color: white;
+}
+
+.link-text a {
+    font-family: Poppins-SemiBold;
+    cursor: pointer;
+    text-decoration: underline;
+    color: #ffffff;
+    transition: color 0.3s ease;
+}
+
+.link-text a:hover {
+    color: #00d2ff;
+    /* 💡 You can use your brand color here */
+}

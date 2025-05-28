@@ -4,6 +4,7 @@ import {
     ref,
     get,
     set,
+    update,
     signInWithEmailAndPassword
 } from '../firebase-module.js';
 import {
@@ -99,68 +100,68 @@ document.getElementById("submit-profile").addEventListener("click", async (e) =>
     }
 });
 
-document.getElementById("submit-wifi").addEventListener("click", async () => {
-    const ssid = document.getElementById("ssid").value.trim();
-    const password = document.getElementById("password").value.trim();
+// document.getElementById("submit-wifi").addEventListener("click", async () => {
+//     const ssid = document.getElementById("ssid").value.trim();
+//     const password = document.getElementById("password").value.trim();
 
-    // 🔍 Validate inputs
-    if (!ssid || !password) {
-        Swal.fire({
-            icon: "warning",
-            title: "Missing Fields",
-            text: "Please enter both SSID and Password.",
-        });
-        return;
-    }
+//     // 🔍 Validate inputs
+//     if (!ssid || !password) {
+//         Swal.fire({
+//             icon: "warning",
+//             title: "Missing Fields",
+//             text: "Please enter both SSID and Password.",
+//         });
+//         return;
+//     }
 
-    const uid = sessionStorage.getItem("uid");
-    const homeId = sessionStorage.getItem("homeId");
+//     const uid = sessionStorage.getItem("uid");
+//     const homeId = sessionStorage.getItem("homeId");
 
-    if (!uid || !homeId) {
-        Swal.fire({
-            icon: "error",
-            title: "Missing Session",
-            text: "User information is missing. Please log in again.",
-        });
-        return;
-    }
+//     if (!uid || !homeId) {
+//         Swal.fire({
+//             icon: "error",
+//             title: "Missing Session",
+//             text: "User information is missing. Please log in again.",
+//         });
+//         return;
+//     }
 
-    const wifiData = {
-        ssid,
-        password
-    };
+//     const wifiData = {
+//         ssid,
+//         password
+//     };
 
-    try {
-        Swal.fire({
-            title: "Saving Wi-Fi Settings...",
-            allowOutsideClick: false,
-            didOpen: () => Swal.showLoading()
-        });
+//     try {
+//         Swal.fire({
+//             title: "Saving Wi-Fi Settings...",
+//             allowOutsideClick: false,
+//             didOpen: () => Swal.showLoading()
+//         });
 
-        await set(ref(db, DB_PATHS.wifiConfig(homeId)), wifiData);
+//         await set(ref(db, DB_PATHS.wifiConfig(homeId)), wifiData);
 
-        // ✅ Save in sessionStorage too
-        sessionStorage.setItem("ssid", ssid);
-        sessionStorage.setItem("password", password);
-        sessionStorage.setItem("wifiConfig", JSON.stringify(wifiData));
-        fillWiFiFieldsFromSession();
+//         // ✅ Save in sessionStorage too
+//         sessionStorage.setItem("ssid", ssid);
+//         sessionStorage.setItem("password", password);
+//         sessionStorage.setItem("wifiConfig", JSON.stringify(wifiData));
+//         fillWiFiFieldsFromSession();
 
-        Swal.close();
-        Swal.fire({
-            icon: "success",
-            title: "Saved",
-            text: "Wi-Fi credentials saved successfully!"
-        });
-    } catch (err) {
-        Swal.close();
-        console.error("❌ Error saving Wi-Fi config:", err);
-        Swal.fire({
-            icon: "error",
-            title: "Save Failed",
-            text: err.message || "Could not save Wi-Fi credentials. Try again."
-        });
-    }
-});
+//         Swal.close();
+//         Swal.fire({
+//             icon: "success",
+//             title: "Saved",
+//             text: "Wi-Fi credentials saved successfully!"
+//         });
+//     } catch (err) {
+//         Swal.close();
+//         console.error("❌ Error saving Wi-Fi config:", err);
+//         Swal.fire({
+//             icon: "error",
+//             title: "Save Failed",
+//             text: err.message || "Could not save Wi-Fi credentials. Try again."
+//         });
+//     }
+// });
 
 document.getElementById("add-member-form").addEventListener("submit", async (e) => {
     e.preventDefault(); // ✅ Prevent page reload

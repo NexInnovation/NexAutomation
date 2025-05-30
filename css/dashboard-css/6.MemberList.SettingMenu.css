@@ -2,10 +2,10 @@
     display: none;
     flex-direction: column;
     height: 100vh;
-    min-height: 0;
     width: 380px;
     max-width: 80vw;
-    background: #11101d;
+    background: #1e1c2d;
+    /* dark-themed sidebar */
     position: fixed;
     top: 0;
     left: 78px;
@@ -13,113 +13,59 @@
     padding: 24px 20px;
     border-top-right-radius: 20px;
     overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
 
 .sidebar6.show {
     display: flex;
 }
 
-.sidebar6 label.links_name {
-    display: block;
-    font-size: 15px;
-    font-weight: 500;
-    color: #ffffff;
-    margin-bottom: 6px;
-    list-style-type: none;
-}
-
-.sidebar6 li {
-    list-style-type: none;
-}
-
-#member-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    flex-shrink: 0;
-}
-
-#member-scroll-wrapper {
-    flex-grow: 1;
-    /* 📦 Take all remaining vertical space */
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding-right: 4px;
-    margin-top: 12px;
-    /* padding-top: 10px; */
-    /* padding-bottom: 10px; */
-}
-
-#member-scroll-wrapper::-webkit-scrollbar {
-    display: none;
-}
-
-#member-scroll-wrapper {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-
-/* ✅ Member card style */
-.card-style {
-    /* background: #1d1b31; */
-    color: #ffffff;
-    /* border-radius: 12px; */
-    padding: 16px 20px;
-    font-size: 14px;
-    font-weight: 400;
-    /* border: 1.5px solid #ffffff33; */
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-/* .card-style:hover {
-    margin: 10px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    color: #11101d;
-    transform: scale(1.01);
-} */
-
-#admin-list-container,
-#member-scroll-wrapper {
-    /* border: 1px solid white;
-    border-radius: 10px; */
-}
-
-.sidebar6 fieldset {
-    color: #ffffff;
-    /* padding: 10px; */
-    /* margin: 0px; */
-    border: none;
-    padding-inline: 0;
-
-}
-
-/* ✅ ONLY the Member fieldset needs to scroll */
-.sidebar6 fieldset:last-of-type {
-    flex-grow: 1;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-}
-
-.member-fieldset {
-    /* border: 1px solid red; */
-    margin-top: 10px;
-}
-
 .sidebar6 fieldset {
     border: 1px solid #4b4b6b;
     border-radius: 8px;
-    padding: 15px;
+    padding: 12px 16px;
     margin-bottom: 20px;
-    background: #1e1c2d;
+    background: #292841;
+    /* improved background contrast */
 }
 
 .sidebar6 legend {
     font-weight: 600;
     font-size: 14px;
-    padding: 0 10px;
     color: #ffffff;
+    padding: 0 8px;
+}
+
+.sidebar6 ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar6 li {
+    color: #ffffff;
+    font-size: 14px;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background 0.2s ease;
+}
+
+.sidebar6 li:last-child {
+    border-bottom: none;
+}
+
+.sidebar6 li:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+#member-scroll-wrapper {
+    flex-grow: 1;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+#member-scroll-wrapper::-webkit-scrollbar {
+    display: none;
 }

@@ -1,0 +1,88 @@
+{
+    "currentUser_uid": "abc123UIDxyz",
+    "currentUser_email": "nexinnovation.6112@gmail.com",
+    "currentUser_homeId": "home0001-somePushKey123",
+    "currentUser_role": "admin",
+    "currentUser_totalMembers": "3",
+    "currentUser_totalDevices": "2",
+    "currentUser_fullProfile": {
+        "uid": "abc123UIDxyz",
+        "email": "nexinnovation.6112@gmail.com",
+        "role": "admin",
+        "firstName": "Parth",
+        "lastName": "",
+        "mobile": "",
+        "city": "Surat",
+        "createdAt": "2025-05-28T14:50:17.093Z",
+        "isAdmin": true
+    },
+    "allUsers": {
+        "admin": {
+            "abc123UIDxyz": {
+                "uid": "abc123UIDxyz",
+                "email": "nexinnovation.6112@gmail.com",
+                "role": "admin",
+                "firstName": "Parth",
+                "lastName": "",
+                "mobile": "",
+                "city": "Surat",
+                "createdAt": "2025-05-28T14:50:17.093Z",
+                "isAdmin": true
+            }
+        },
+        "members": {
+            "memberUID1": {
+                "uid": "memberUID1",
+                "email": "member1@gmail.com",
+                "role": "member",
+                "firstName": "Member1",
+                "lastName": "",
+                "mobile": "",
+                "city": "",
+                "createdAt": "2025-05-29T14:50:17.093Z",
+                "isAdmin": false
+            },
+            "memberUID2": {
+                "uid": "memberUID2",
+                "email": "member2@gmail.com",
+                "role": "member",
+                "firstName": "Member2",
+                "lastName": "",
+                "mobile": "",
+                "city": "",
+                "createdAt": "2025-05-29T15:00:00.000Z",
+                "isAdmin": false
+            }
+        }
+    },
+    "devices": {
+        "device1": {
+            "deviceData": {
+                "roomName": "Living Room",
+                "chNumber": 2
+            },
+            "R1": {
+                "name": "Light 1",
+                "type": 1,
+                "state": 0
+            },
+            "R2": {
+                "name": "Fan",
+                "type": 2,
+                "state": 0
+            }
+        },
+        "device2": {
+            "deviceData": {
+                "roomName": "Bedroom",
+                "chNumber": 1
+            },
+            "R1": {
+                "name": "Light",
+                "type": 1,
+                "state": 0
+            }
+        }
+    },
+    "rememberMe": "true"
+}

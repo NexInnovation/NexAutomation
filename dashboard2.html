@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="css/dashboard-css/7.AddDevice.SettingMenu.css">
     <link rel="stylesheet" href="css/dashboard-css/8.RoomShow.SettingMenu.css">
     <link rel="stylesheet" href="css/dashboard-css/9.UpdateList.RoomList.SettingMenu.css">
+    <link rel="stylesheet" href="css/dashboard-css/10.dashboardheading.css">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
@@ -159,7 +160,17 @@
                 </li>
                 <li>
                     <label class="links_name">Password</label>
-                    <input type="password" id="mpassword" placeholder="Password" />
+                    <div class="uid-wrapper-flex">
+                        <input type="password" id="mpassword" placeholder="Password" />
+                        <i class='bx bx-show uid-toggle' id="toggle-member-password-visibility"></i>
+                    </div>
+                </li>
+                <li>
+                    <label class="links_name">Admin Password</label>
+                    <div class="uid-wrapper-flex">
+                        <input type="password" id="Apassword" placeholder="Admin Password" />
+                        <i class='bx bx-show uid-toggle' id="toggle-admin-password-visibility"></i>
+                    </div>
                 </li>
                 <li>
                     <button type="submit">Submit</button>
@@ -167,6 +178,7 @@
             </form>
         </ul>
     </div>
+
 
     <!-- Sidebar 6: Member List -->
     <div class="sidebar6" id="sidebar6">
@@ -220,8 +232,9 @@
     <!-- Sidebar 8: Room List for Update -->
     <div class="sidebar8" id="sidebar8">
         <ul class="nav-list">
-            <li><label class="links_name">Select Room to Update</label></li>
-            <div id="update-room-list"></div>
+            <li><label class="links_name">Select Room</label></li>
+            <li class="no-room-msg" style="color: #ccc; font-size: 14px;">You have no room added</li>
+            <!-- JS will overwrite this -->
         </ul>
     </div>
 
@@ -230,6 +243,10 @@
         <ul class="nav-list">
             <form id="update-device-form">
                 <li><label class="links_name">Update Device</label></li>
+                <li>
+                    <label class="links_name">Device Id</label>
+                    <input type="text" id="update-device-device-id" readonly />
+                </li>
                 <li>
                     <label class="links_name">Room Name</label>
                     <input type="text" id="update-device-room-name" />
@@ -262,17 +279,30 @@
         </ul>
     </div>
 
-    <section class="home-section"></section>
+    <section class="home-section" id="room-data-display"></section>
+
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script type="module" src="js/firebase-module.js"></script>
+    <script type="module" src="js/db-paths.js"></script>
+
+    <script type="module" src="js/dashboard2/init/dashboard-init.js"></script>
+
+    <script type="module" src="js/dashboard2/fdb-logic functions/logout_function.js"></script>
+    <script type="module" src="js/dashboard2/fdb-logic functions/update_profile_function.js"></script>
+    <script type="module" src="js/dashboard2/fdb-logic functions/add_device.js"></script>
+    <script type="module" src="js/dashboard2/fdb-logic functions/update_device.js"></script>
+    <script type="module" src="js/dashboard2/fdb-logic functions/add_member.js"></script>
+
+    <!-- <script type="module" src="js/dashboard2/fdb-logic functions/temp/logAllSessionStorageData.js"></script>-->
+    <script type="module" src="js/dashboard2/fdb-logic functions/temp/logAllLocalStorageData.js"></script>
 
     <script type="module" src="js/dashboard2/ui/toggle_visibility_to_all_panel.js"></script>
     <script type="module" src="js/dashboard2/ui/escape_function_close_panel.js"></script>
     <script type="module" src="js/dashboard2/ui/outsideClick_function_close_panel.js"></script>
-    <script type="module" src="js/dashboard2/fdb-logic functions/logout_function.js"></script>
-    <script type="module" src="js/firebase-module.js"></script>
-    <script type="module" src="js/db-paths.js"></script>
-
+    <script type="module" src="js/dashboard2/ui/fill_function_to_all_panel.js"></script>
+    <script type="module" src="js/dashboard2/ui/show_dashboard.js"></script>
 </body>
 
 </html>

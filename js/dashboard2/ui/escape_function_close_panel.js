@@ -1,4 +1,7 @@
-// Escape key handler to close all open panels
+import {
+    clearAddDeviceForm
+} from "./fill_function_to_all_panel.js";
+
 document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
         const sidebars = [
@@ -16,7 +19,15 @@ document.addEventListener("keydown", (e) => {
         sidebars.forEach((sidebar) => {
             if (sidebar && sidebar.classList.contains("show")) {
                 sidebar.classList.remove("show");
+                console.log(`🚪 Closed via Escape key: ${sidebar.id}`);
+            }
+            // ✅ Check if it was the Add Device sidebar
+            if (sidebar.id === "sidebar7") {
+                // 🔧 Clear Add Device form
+                clearAddDeviceForm();
             }
         });
+
+
     }
 });

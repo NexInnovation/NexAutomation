@@ -1,7 +1,6 @@
 /
 ├── NexInnovation-config/
-│   ├── lastNumber: "0001"               # Last assigned home number
-│   └── lastDeviceNumber: "0001"         # (optional) for device count
+│   └── lastNumber: "0001"               # Last assigned home number
 │
 ├── users/
 │   └── {uid}/
@@ -13,6 +12,9 @@
 │       ├── home-data/
 │       │   ├── total member
 │       │   └── total device
+│       │
+│       ├── user-list/
+│       │   └── uid: true/false
 │       │
 │       ├── user/
 │       │   ├── admin/
@@ -26,6 +28,7 @@
 │       │   │       ├── mobile
 │       │   │       ├── city
 │       │   │       └── createdAt
+│       │   │
 │       │   └── member/
 │       │       ├── {uid}/
 │       │       │   ├── uid
@@ -37,6 +40,7 @@
 │       │       │   ├── mobile
 │       │       │   ├── city
 │       │       │   └── createdAt
+│       │       │
 │       │       └── {uid}/
 │       │           ├── uid
 │       │           ├── email
@@ -48,14 +52,9 @@
 │       │           ├── city
 │       │           └── createdAt
 │       │
-│       ├── user-list/
-│       │   └── {uid}/
-│       │       ├── homeId
-│       │       └── role
-│       │
 │       └── automation/
 │           ├── device1/
-│           │   ├── wifi-config/               # ✅ New: device-specific config
+│           │   ├── wifi-config/
 │           │   │   ├── ssid: "DeviceWiFi1"
 │           │   │   └── password: "password1"
 │           │   ├── deviceData/
@@ -63,9 +62,11 @@
 │           │   │   └── roomName: "Living Room"
 │           │   ├── R1/
 │           │   │   ├── state: 0
+│           │   │   ├── type: 2
 │           │   │   └── name: "Fan"
 │           │   └── R2/
 │           │       ├── state: 1
+│           │       ├── type: 1
 │           │       └── name: "Light"
 │           │
 │           ├── device2/
@@ -77,7 +78,9 @@
 │           │   │   └── roomName: "Office"
 │           │   ├── R1/
 │           │   │   ├── state: 0
+│           │   │   ├── type: 2
 │           │   │   └── name: "Fan"
 │           │   └── R2/
 │           │       ├── state: 1
+│           │       ├── type: 1
 │           │       └── name: "Light"

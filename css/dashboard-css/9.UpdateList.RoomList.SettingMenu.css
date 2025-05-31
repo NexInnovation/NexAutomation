@@ -151,3 +151,8 @@
     padding: 0 10px;
     color: #ffffff;
 }
+
+.delete-icon:hover {
+    color: darkred;
+    transform: scale(1.2);
+}

@@ -1,8 +1,7 @@
 import {
-    clearAddDeviceForm
+    clearAddDeviceForm,
+    clearAddMemberForm
 } from "./fill_function_to_all_panel.js";
-
-clearAddDeviceForm
 
 document.addEventListener("click", (e) => {
     const sidebarsWithButtons = [{
@@ -55,6 +54,10 @@ document.addEventListener("click", (e) => {
             // ✅ Check if it was the Add Device sidebar
             if (sidebar.id === "sidebar7") { // Replace with actual ID!
                 clearAddDeviceForm();
+            }
+
+            if (sidebar.id === "sidebar5") { // Replace with actual ID!
+                clearAddMemberForm();
             }
         }
     });

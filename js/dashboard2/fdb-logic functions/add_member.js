@@ -110,9 +110,13 @@ document.getElementById("add-member-form")?.addEventListener("submit", async (e)
         console.log("🔢 Current total members:", homeData["total member"], "➡️ New total members:", newTotalMembers);
 
         const updates = {};
-        updates[`automation/${homeId}/user/member/${memberUid}`] = profileData;
-        updates[`automation/${homeId}/home-data/total member`] = newTotalMembers;
-        updates[`automation/${homeId}/user-list/${memberUid}`] = false; // 👈 ensure user-list includes the new member
+        updates[DB_PATHS.homeMemberUser(homeId, memberUid)] = profileData; // /automation/{homeId}/user/member/{uid}
+        updates[DB_PATHS.totalMembers(homeId)] = newTotalMembers; // /automation/{homeId}/home-data/total member
+        updates[DB_PATHS.userList(homeId) + `/${memberUid}`] = false; // /automation/{homeId}/user-list/{uid}
+        updates[DB_PATHS.userProfileLink(memberUid)] = {
+            homeId,
+            role: 'member'
+        }; // /users/{uid}
         console.log("🔄 Firebase updates prepared:", updates);
 
         console.log("⏳ Sending updates to Firebase...");
@@ -138,7 +142,9 @@ document.getElementById("add-member-form")?.addEventListener("submit", async (e)
         localStorage.setItem("currentUser_totalDevices", totalDevices);
 
         console.log("⏳ Fetching all users for localStorage...");
-        const memberListRef = ref(db, `automation/${homeId}/user/member`);
+        // const memberListRef = ref(db, `automation/${homeId}/user/member`);
+        const memberListRef = ref(db, DB_PATHS.homeMemberUser(homeId, '')); // Passing empty string to get root path
+
         const memberListSnap = await get(memberListRef);
         const allUsers = {
             admin: {

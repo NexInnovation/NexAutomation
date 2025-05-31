@@ -70,3 +70,13 @@
     color: #ffffff;
     margin-bottom: 6px;
 }
+
+/* Room icon styling */
+.room-icon {
+    margin-right: 8px;
+    /* spacing */
+    color: #ccc;
+    /* light color for subtle effect */
+    font-size: 0.9em;
+    /* smaller size than text */
+}

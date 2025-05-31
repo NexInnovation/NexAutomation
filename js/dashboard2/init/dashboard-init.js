@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
             fillProfileDetails();
             fillRoomSelectSidebar();
             fillMemberListSidebar();
-            fillUpdateDeviceRoomListSidebar
+            fillUpdateDeviceRoomListSidebar();
         } else if (!isManualLogout) {
             Swal.fire({
                 icon: 'warning',

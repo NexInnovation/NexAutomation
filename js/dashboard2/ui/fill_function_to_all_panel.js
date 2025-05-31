@@ -1,3 +1,12 @@
+import DB_PATHS from "../../db-paths.js";
+
+import {
+    get,
+    db,
+    ref,
+    update
+} from "../../firebase-module.js";
+
 import {
     showRoomOnDashboard
 } from "./show_dashboard.js";
@@ -5,6 +14,7 @@ import {
 import {
     adjustSidebar
 } from "./toggle_visibility_to_all_panel.js";
+
 
 export function fillProfileDetails() {
     console.log("🟡 fillProfileDetails() called...");
@@ -32,7 +42,6 @@ export function fillProfileDetails() {
     const uidInput = document.getElementById("profile-uid-not-editable");
     const homeIdInput = document.getElementById("profile-homeid-not-editable");
 
-    // Fill values from profile
     firstNameInput.value = profile.firstName || '';
     lastNameInput.value = profile.lastName || '';
     mobileInput.value = profile.mobile || '';
@@ -42,8 +51,15 @@ export function fillProfileDetails() {
     uidInput.value = profile.uid || '';
     homeIdInput.value = localStorage.getItem("currentUser_homeId") || '';
 
+    // 🟩 Update sidebar username
+    const sidebarUsername = document.getElementById("sidebar-username");
+    if (sidebarUsername) {
+        sidebarUsername.textContent = profile.firstName || 'User';
+    }
+
     console.log("📋 Profile sidebar form filled successfully.");
 }
+
 
 export function fillRoomSelectSidebar() {
     console.log("🟡 Starting to fill Room Select Sidebar...");
@@ -97,14 +113,25 @@ export function fillRoomSelectSidebar() {
 
         // Create label with id=deviceId and links_name class
         const label = document.createElement("label");
-        label.id = deviceId; // ✅ deviceId as HTML id
+        label.id = deviceId;
         label.classList.add("links_name");
-        label.textContent = roomName;
 
-        // 🔗 Click event on <label>
+        // ➡️ Create triangle icon span
+        const iconSpan = document.createElement("span");
+        iconSpan.classList.add("room-icon");
+        iconSpan.textContent = "▶️"; // You can replace this with a custom icon!
+
+        // ➡️ Create span for room name
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = roomName;
+
+        // Append icon and room name to label
+        label.appendChild(iconSpan);
+        label.appendChild(nameSpan);
+
+        // 🔗 Click event
         label.addEventListener("click", () => {
             console.log(`✅ Room selected: ${roomName} (Device ID: ${deviceId})`);
-            // 👉 Example callback: load room data
             showRoomOnDashboard(deviceId, roomName);
         });
 
@@ -114,12 +141,10 @@ export function fillRoomSelectSidebar() {
         console.log(`✅ Added to sidebar: ${roomName} (Label ID: ${deviceId})`);
     });
 
+
     console.log("✅ Final: Room list successfully populated in Sidebar 3!");
 }
 
-/**
- * 🟩 Fill Update Device Form with selected device data
- */
 export function populateUpdateDeviceForm(deviceId) {
     console.log("🟡 Populating Update Device Form for deviceId:", deviceId);
 
@@ -174,6 +199,8 @@ export function fillUpdateDeviceRoomListSidebar() {
 
     const roomListContainer = document.querySelector("#sidebar8 ul.nav-list");
     const noRoomMsg = roomListContainer.querySelector(".no-room-msg");
+
+    // Clear previous room list
     roomListContainer.querySelectorAll("li.room-item").forEach(li => li.remove());
 
     const devices = JSON.parse(localStorage.getItem("devices") || "{}");
@@ -206,30 +233,126 @@ export function fillUpdateDeviceRoomListSidebar() {
         const label = document.createElement("label");
         label.id = `updatemenu_${deviceId}`;
         label.classList.add("links_name");
-        label.textContent = roomName;
 
-        label.addEventListener("click", (event) => {
-            console.log(`✅ Room selected for Update: ${roomName} (Device ID: ${deviceId})`);
-            populateUpdateDeviceForm(deviceId);
+        // ➡️ Triangle icon
+        const iconSpan = document.createElement("span");
+        iconSpan.classList.add("room-icon");
+        iconSpan.textContent = "▶️";
 
-            // Hide sidebar8 and show sidebar9
-            window._8_select_room_sm_sidebar.classList.remove("show");
-            window._9_update_device_sm_sidebar.classList.add("show");
+        // ➡️ Room name span
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = roomName;
 
-            // Adjust sidebar if needed
-            adjustSidebar(window._9_update_device_sm_sidebar, window._4_setting_menu_sidebar_show_btn);
+        // ➡️ Delete icon (🗑️)
+        const deleteIcon = document.createElement("span");
+        deleteIcon.textContent = "🗑️";
+        deleteIcon.classList.add("delete-icon");
+        deleteIcon.title = "Delete Room";
+        deleteIcon.style.cursor = "pointer";
+        deleteIcon.style.marginLeft = "10px";
+        deleteIcon.style.color = "red";
 
-            // 🚫 Prevent global click handler from immediately closing the sidebar
-            event.stopPropagation();
+        // Delete click handler with Swal
+        deleteIcon.addEventListener("click", async (event) => {
+            event.stopPropagation(); // Prevent label click
+            const result = await Swal.fire({
+                title: 'Delete Room?',
+                text: `Are you sure you want to delete the room:\n\n${roomName}`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel',
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6'
+            });
+
+            if (result.isConfirmed) {
+                // Show loading spinner
+                Swal.fire({
+                    title: 'Deleting...',
+                    text: 'Please wait while the room is being deleted.',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    didOpen: () => Swal.showLoading()
+                });
+
+                // Perform the delete
+                await deleteDevice(deviceId, roomName);
+
+                // ✅ Show success after delete
+                await Swal.fire({
+                    icon: 'success',
+                    title: 'Deleted!',
+                    text: `Room '${roomName}' deleted successfully.`,
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+            }
         });
 
+        // Add icon and room name to label
+        label.appendChild(iconSpan);
+        label.appendChild(nameSpan);
+
+        // Append label and delete icon to list item
         li.appendChild(label);
+        li.appendChild(deleteIcon);
+
         roomListContainer.appendChild(li);
     });
 
     console.log("✅ Update Device Room list populated.");
 }
 
+async function deleteDevice(deviceId, roomName) {
+    console.log(`🗑️ Deleting device: ${roomName} (${deviceId})...`);
+
+    try {
+        const homeId = localStorage.getItem("currentUser_homeId");
+        if (!homeId) throw new Error("Home ID not found!");
+
+        // 🔍 Get current total device count
+        const totalDevicesRef = ref(db, DB_PATHS.totalDevices(homeId));
+        const totalDevicesSnap = await get(totalDevicesRef);
+        let totalDevices = totalDevicesSnap.exists() ? totalDevicesSnap.val() : 0;
+
+        // Decrement total device count (avoid negative)
+        totalDevices = Math.max(0, totalDevices - 1);
+
+        // Prepare updates
+        const updates = {};
+        updates[DB_PATHS.deviceById(homeId, deviceId)] = null; // Delete device
+        updates[DB_PATHS.totalDevices(homeId)] = totalDevices; // Update total devices
+
+        console.log("🗑️ Firebase delete updates:", updates);
+        await update(ref(db), updates);
+
+        // Update localStorage
+        const devices = JSON.parse(localStorage.getItem("devices") || "{}");
+        delete devices[deviceId];
+        localStorage.setItem("devices", JSON.stringify(devices));
+        localStorage.setItem("currentUser_totalDevices", totalDevices); // Update localStorage
+
+        // ✅ Show success
+        await Swal.fire({
+            icon: 'success',
+            title: 'Deleted!',
+            text: `Room '${roomName}' deleted successfully.`,
+            timer: 1500,
+            showConfirmButton: false
+        });
+
+        // Refresh the sidebar
+        fillUpdateDeviceRoomListSidebar();
+    } catch (error) {
+        console.error("❌ Error deleting device:", error.message);
+        await Swal.fire({
+            icon: 'error',
+            title: 'Delete Failed!',
+            text: `Failed to delete room: ${error.message}`
+        });
+    }
+}
 
 
 /**
@@ -289,4 +412,16 @@ export function clearAddDeviceForm() {
     document.getElementById("channel-name-fields").innerHTML = "";
 
     console.log("✅ Add Device form cleared!");
+}
+
+export function clearAddMemberForm() {
+    console.log("🧹 Clearing Add Member form...");
+
+    // Clear input fields
+    document.getElementById("mfname").value = "";
+    document.getElementById("memail").value = "";
+    document.getElementById("mpassword").value = "";
+    document.getElementById("Apassword").value = "";
+
+    console.log("✅ Add Member form cleared!");
 }

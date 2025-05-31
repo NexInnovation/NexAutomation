@@ -11,7 +11,7 @@ import DB_PATHS from '../../db-paths.js';
 export async function fetchAndSaveBasicHomeData(uid, email) {
     console.log("🟡 Fetching basic home data...");
 
-    const userRef = ref(db, DB_PATHS.userProfile(uid));
+    const userRef = ref(db, DB_PATHS.userProfileLink(uid));
     const userSnap = await get(userRef);
     if (!userSnap.exists()) throw new Error("❌ User profile not found in DB!");
 
@@ -49,16 +49,38 @@ export async function fetchAndSaveBasicHomeData(uid, email) {
 /**
  * 🟩 Fetch and save admin profile
  */
-export async function fetchAndSaveAdminProfile(homeId, uid) {
+export async function fetchAndSaveAdminProfile(homeId, currentUid) {
     console.log("🟡 Fetching admin profile...");
-    const adminRef = ref(db, DB_PATHS.homeAdminUser(homeId, uid));
+
+    // 🔍 Load user-list to find the admin UID (where value is true)
+    const userListRef = ref(db, DB_PATHS.userList(homeId));
+    const userListSnap = await get(userListRef);
+    let adminUid = null;
+
+    if (userListSnap.exists()) {
+        const userList = userListSnap.val();
+        for (const uid in userList) {
+            if (userList[uid] === true) { // true means admin
+                adminUid = uid;
+                break;
+            }
+        }
+    }
+
+    if (!adminUid) {
+        console.warn("⚠️ Admin UID not found in user-list.");
+        return;
+    }
+
+    const adminRef = ref(db, DB_PATHS.homeAdminUser(homeId, adminUid));
     const adminSnap = await get(adminRef);
+
     if (adminSnap.exists()) {
         const adminProfile = adminSnap.val();
-        localStorage.setItem("currentUser_fullProfile", JSON.stringify(adminProfile));
-        console.log("✅ Admin profile saved:", adminProfile);
+        localStorage.setItem("currentUser_adminProfile", JSON.stringify(adminProfile));
+        console.log("✅ Admin profile saved to localStorage:", adminProfile);
     } else {
-        console.warn("⚠️ Admin profile not found.");
+        console.warn("⚠️ Admin profile not found in DB.");
     }
 }
 
@@ -67,7 +89,7 @@ export async function fetchAndSaveAdminProfile(homeId, uid) {
  */
 export async function fetchAndSaveMemberProfile(homeId, uid) {
     console.log("🟡 Fetching member profile...");
-    const memberRef = ref(db, `automation/${homeId}/user/member/${uid}`);
+    const memberRef = ref(db, DB_PATHS.homeMemberUser(homeId, uid));
     const memberSnap = await get(memberRef);
     if (memberSnap.exists()) {
         const memberProfile = memberSnap.val();
@@ -89,13 +111,35 @@ export async function fetchAndSaveAllUsers(homeId) {
         members: {}
     };
 
-    const adminRef = ref(db, DB_PATHS.homeAdminUser(homeId, localStorage.getItem("currentUser_uid")));
-    const adminSnap = await get(adminRef);
-    if (adminSnap.exists()) {
-        allUsers.admin[localStorage.getItem("currentUser_uid")] = adminSnap.val();
+    // Get admin UID from user-list
+    const userListRef = ref(db, DB_PATHS.userList(homeId));
+    const userListSnap = await get(userListRef);
+    let adminUid = null;
+
+    if (userListSnap.exists()) {
+        const userList = userListSnap.val();
+        for (const uid in userList) {
+            if (userList[uid] === true) { // true means admin
+                adminUid = uid;
+                break;
+            }
+        }
     }
 
-    const memberListRef = ref(db, `automation/${homeId}/user/member`);
+    if (adminUid) {
+        const adminRef = ref(db, DB_PATHS.homeAdminUser(homeId, adminUid));
+        const adminSnap = await get(adminRef);
+        if (adminSnap.exists()) {
+            allUsers.admin[adminUid] = adminSnap.val();
+        } else {
+            console.warn("⚠️ Admin profile not found in DB.");
+        }
+    } else {
+        console.warn("⚠️ Admin UID not found in user-list.");
+    }
+
+    // Load all members
+    const memberListRef = ref(db, DB_PATHS.homeMemberUser(homeId, '')); // '' returns all members
     const memberListSnap = await get(memberListRef);
     if (memberListSnap.exists()) {
         allUsers.members = memberListSnap.val();
@@ -105,8 +149,9 @@ export async function fetchAndSaveAllUsers(homeId) {
     }
 
     localStorage.setItem("allUsers", JSON.stringify(allUsers));
-    console.log("✅ All users saved.");
+    console.log("✅ All users (including admin) saved to localStorage!");
 }
+
 
 /**
  * 🟩 Fetch and save all devices

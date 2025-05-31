@@ -111,14 +111,14 @@ async function handleSignup() {
         };
 
         const updates = {};
-        updates[DB_PATHS.userProfile(uid)] = {
+        updates[DB_PATHS.userProfileLink(uid)] = {
             homeId,
             role: 'admin'
-        };
+        }; // 🟩 FIXED
         updates[DB_PATHS.homeAdminUser(homeId, uid)] = profileData;
-        updates[`automation/${homeId}/user-list/${uid}`] = true;
-        updates[`automation/${homeId}/home-data/total member`] = 0;
-        updates[`automation/${homeId}/home-data/total device`] = 0;
+        updates[DB_PATHS.userList(homeId) + `/${uid}`] = true;
+        updates[DB_PATHS.totalMembers(homeId)] = 0;
+        updates[DB_PATHS.totalDevices(homeId)] = 0;
 
         console.log("🟡 Writing new user data to Firebase:", updates);
         await update(ref(db), updates);
@@ -148,6 +148,7 @@ async function handleSignup() {
         });
     }
 }
+
 
 // ========== LOGIN FUNCTION ==========
 async function handleLogin() {
@@ -216,7 +217,9 @@ async function handleLogin() {
         const uid = user.uid;
         console.log("✅ Firebase login successful:", uid);
 
-        const userSnap = await get(ref(db, DB_PATHS.userProfile(uid)));
+        // const userSnap = await get(ref(db, DB_PATHS.userProfile(uid)));
+        const userSnap = await get(ref(db, DB_PATHS.userProfileLink(uid)));
+
         if (!userSnap.exists()) throw new Error("User profile not found in DB");
 
         const {

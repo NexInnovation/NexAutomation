@@ -1,34 +1,162 @@
-/* Basic styling for the room display section */
-.home-section {
-    box-sizing: border-box;
-    max-width: 90%;
-    padding: 20px 50px;
-    background: #f9f9f9;
-    min-height: 100px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    overflow-x: hidden;
-    width: calc(100% - 100px);
-    margin: 50px;
-    /* center it */
+/* ========== Overall container ========== */
+#room-data-display {
+    background: #f5f5f5;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 800px;
 }
 
-/* Styling the room display box */
-.room-display-box {
+/* ========== Header styling ========== */
+.room-header {
     text-align: center;
-    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
-/* Room name style */
-.room-display-box .room-name {
-    font-size: 1.8rem;
+.room-name {
+    font-size: 24px;
     font-weight: bold;
-    margin-bottom: 5px;
-    color: #333;
 }
 
-/* Device ID style */
-.room-display-box .device-id {
-    font-size: 1rem;
-    color: #777;
+.device-id {
+    font-size: 14px;
+    color: #666;
+}
+
+/* ========== Section titles ========== */
+.room-section {
+    margin-bottom: 20px;
+}
+
+.room-section h3 {
+    margin: 10px 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* ========== Common device list styling ========== */
+/* Common styles for device list: center items horizontally */
+.device-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* ⬅️ Center lights/fans in a row */
+    gap: 10px;
+    /* Small spacing between items */
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+/* ========== Lights styling (max 4 per row) ========== */
+/* Lights: maximum 4 in a row, but even if only 1, use 25% width */
+.lights-section .device-list li {
+    flex: 0 0 25%;
+    /* Always 25% width, no growing */
+    max-width: 25%;
+    background: #fff;
+    text-align: center;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    min-width: 100px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+/* ========== Fans styling (max 2 per row, square box) ========== */
+/* Fans: maximum 2 in a row, but even if only 1, use 50% width */
+.fans-section .device-list li {
+    flex: 0 0 50%;
+    /* Always 50% width, no growing */
+    max-width: 50%;
+    aspect-ratio: 3 / 1;
+    background: #fff;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    min-width: 100px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+/* Center last fan if odd number (like 3 fans: last fan centered) */
+.fans-section .device-list li:nth-child(3):nth-last-child(1) {
+    flex: 1 1 100%;
+    max-width: 100%;
+}
+
+/* ========== Hover effect ========== */
+.device-list li:hover {
+    background-color: #e0f7fa;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s;
+}
+
+/* ========== Responsive: Mobile (up to 768px) ========== */
+@media (max-width: 768px) {
+
+    html,
+    body {
+        overflow-x: hidden;
+    }
+
+    /* Container adjustments */
+    #room-data-display {
+        margin: 10px 10px;
+        padding: 10px;
+        max-width: 75%;
+        border-radius: 0;
+        /* background-color: aqua; */
+    }
+
+    .room-header {
+        margin-bottom: 10px;
+    }
+
+    .room-name {
+        font-size: 20px;
+    }
+
+    .device-id {
+        font-size: 12px;
+    }
+
+    .room-section {
+        margin-bottom: 15px;
+    }
+
+    .room-section h3 {
+        font-size: 16px;
+    }
+
+    /* Device list adjustments */
+    .device-list {
+        flex-wrap: wrap;
+        /* ensure wrapping */
+        gap: 5px;
+    }
+
+    /* Lights section: 2 lights per row (50% width each) */
+    .lights-section .device-list li {
+        flex: 0 0 48%;
+        max-width: 50%;
+        aspect-ratio: auto;
+        font-size: 16px;
+        min-width: auto;
+    }
+
+    /* Fans section: still single column on mobile (optional, adjust if needed) */
+    .fans-section .device-list li {
+        flex: 0 0 100%;
+        max-width: 100%;
+        aspect-ratio: 2/1;
+        font-size: 16px;
+        min-width: auto;
+    }
+
+
 }

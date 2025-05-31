@@ -11,6 +11,11 @@ import {
     fillUpdateDeviceRoomListSidebar
 } from '../ui/fill_function_to_all_panel.js';
 
+import {
+    showRoomOnDashboard
+} from "../ui/show_dashboard.js";
+
+
 document.getElementById("update-device-form")?.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -112,6 +117,9 @@ document.getElementById("update-device-form")?.addEventListener("submit", async 
 
         fillRoomSelectSidebar();
         fillUpdateDeviceRoomListSidebar();
+
+        // ✅ Call showRoomOnDashboard to update the UI
+        showRoomOnDashboard(deviceId, roomName);
 
         Swal.fire({
             icon: 'success',

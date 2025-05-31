@@ -218,6 +218,7 @@ export function fillUpdateDeviceRoomListSidebar() {
 
     if (roomEntries.length === 0) {
         noRoomMsg.style.display = "block";
+        console.warn("⚠️ No rooms found. Displaying no-room message.");
         return;
     }
 
@@ -252,9 +253,33 @@ export function fillUpdateDeviceRoomListSidebar() {
         deleteIcon.style.marginLeft = "10px";
         deleteIcon.style.color = "red";
 
-        // Delete click handler with Swal
+        // 🟡 Sidebar 9 show logic on label click
+        label.addEventListener("click", (event) => {
+            event.stopPropagation(); // 🛑 Stop click from bubbling to document
+            console.log(`✅ Room selected for Update: ${roomName} (Device ID: ${deviceId})`);
+
+            // Hide Sidebar8 (room list) and show Sidebar9 (update device)
+            if (window._8_select_room_sm_sidebar) {
+                window._8_select_room_sm_sidebar.classList.remove("show");
+            }
+            if (window._9_update_device_sm_sidebar) {
+                window._9_update_device_sm_sidebar.classList.add("show");
+            }
+
+            // Mark Sidebar9 as recently opened to also protect against accidental outside clicks
+            window._9_update_device_sm_sidebar.dataset.recentlyOpened = "true";
+
+            // Clear form and fill update data
+            clearAddDeviceForm();
+            populateUpdateDeviceForm(deviceId);
+
+            // Adjust Sidebar9 position
+            adjustSidebar(window._9_update_device_sm_sidebar, window._4_setting_menu_sidebar_show_btn);
+        });
+
+        // 🟥 Delete click handler with Swal
         deleteIcon.addEventListener("click", async (event) => {
-            event.stopPropagation(); // Prevent label click
+            event.stopPropagation();
             const result = await Swal.fire({
                 title: 'Delete Room?',
                 text: `Are you sure you want to delete the room:\n\n${roomName}`,
@@ -267,7 +292,7 @@ export function fillUpdateDeviceRoomListSidebar() {
             });
 
             if (result.isConfirmed) {
-                // Show loading spinner
+                // 🔄 Show loading spinner
                 Swal.fire({
                     title: 'Deleting...',
                     text: 'Please wait while the room is being deleted.',
@@ -276,10 +301,10 @@ export function fillUpdateDeviceRoomListSidebar() {
                     didOpen: () => Swal.showLoading()
                 });
 
-                // Perform the delete
+                // 🔄 Perform the delete
                 await deleteDevice(deviceId, roomName);
 
-                // ✅ Show success after delete
+                // ✅ Show success
                 await Swal.fire({
                     icon: 'success',
                     title: 'Deleted!',
@@ -290,11 +315,11 @@ export function fillUpdateDeviceRoomListSidebar() {
             }
         });
 
-        // Add icon and room name to label
+        // ➡️ Append label content
         label.appendChild(iconSpan);
         label.appendChild(nameSpan);
 
-        // Append label and delete icon to list item
+        // ➡️ Append label & delete icon to list item
         li.appendChild(label);
         li.appendChild(deleteIcon);
 
@@ -303,6 +328,7 @@ export function fillUpdateDeviceRoomListSidebar() {
 
     console.log("✅ Update Device Room list populated.");
 }
+
 
 async function deleteDevice(deviceId, roomName) {
     console.log(`🗑️ Deleting device: ${roomName} (${deviceId})...`);
@@ -344,6 +370,9 @@ async function deleteDevice(deviceId, roomName) {
 
         // Refresh the sidebar
         fillUpdateDeviceRoomListSidebar();
+        fillRoomSelectSidebar();
+
+        location.reload();
     } catch (error) {
         console.error("❌ Error deleting device:", error.message);
         await Swal.fire({

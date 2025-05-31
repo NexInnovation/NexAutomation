@@ -110,6 +110,7 @@ _2_profile_show_sidebar_show_btn.addEventListener("click", () => {
         _7_add_device_sm_sidebar.classList.remove("show");
         clearAddDeviceForm();
         _8_select_room_sm_sidebar.classList.remove("show");
+        _9_update_device_sm_sidebar.classList.remove("show");
         adjustSidebar(_2_profile_show_sidebar, _2_profile_show_sidebar_show_btn);
         console.log("_2_profile_show_sidebar_show_btn Pressed sidebar open");
     }
@@ -128,6 +129,7 @@ _3_Select_room_main_sidebar_show_btn.addEventListener("click", () => {
         _7_add_device_sm_sidebar.classList.remove("show");
         clearAddDeviceForm();
         _8_select_room_sm_sidebar.classList.remove("show");
+        _9_update_device_sm_sidebar.classList.remove("show");
         adjustSidebar(_3_Select_room_main_sidebar, _3_Select_room_main_sidebar_show_btn);
         console.log("_3_Select_room_main_sidebar_show_btn Pressed sidebar open");
     }
@@ -146,6 +148,7 @@ _4_setting_menu_sidebar_show_btn.addEventListener("click", () => {
         _7_add_device_sm_sidebar.classList.remove("show");
         clearAddDeviceForm();
         _8_select_room_sm_sidebar.classList.remove("show");
+        _9_update_device_sm_sidebar.classList.remove("show");
         adjustSidebar(_4_setting_menu_sidebar, _4_setting_menu_sidebar_show_btn);
         console.log("_4_setting_menu_sidebar_show_btn Pressed sidebar open");
     }
@@ -164,6 +167,7 @@ _5_add_member_sm_sidebar_show_btn.addEventListener("click", () => {
         _7_add_device_sm_sidebar.classList.remove("show");
         clearAddDeviceForm();
         _8_select_room_sm_sidebar.classList.remove("show");
+        _9_update_device_sm_sidebar.classList.remove("show");
         adjustSidebar(_5_add_member_sm_sidebar, _4_setting_menu_sidebar_show_btn);
         console.log("_5_add_member_sm_sidebar_show_btn Pressed sidebar open");
     }
@@ -182,6 +186,7 @@ _6_list_member_sm_sidebar_show_btn.addEventListener("click", () => {
         _7_add_device_sm_sidebar.classList.remove("show");
         clearAddDeviceForm();
         _8_select_room_sm_sidebar.classList.remove("show");
+        _9_update_device_sm_sidebar.classList.remove("show");
         adjustSidebar(_6_list_member_sm_sidebar, _4_setting_menu_sidebar_show_btn);
         console.log("_6_list_member_sm_sidebar_show_btn Pressed sidebar open");
     }
@@ -200,6 +205,7 @@ _7_add_device_sm_sidebar_show_btn.addEventListener("click", () => {
         _5_add_member_sm_sidebar.classList.remove("show");
         _6_list_member_sm_sidebar.classList.remove("show");
         _8_select_room_sm_sidebar.classList.remove("show");
+        _9_update_device_sm_sidebar.classList.remove("show");
         adjustSidebar(_7_add_device_sm_sidebar, _4_setting_menu_sidebar_show_btn);
         console.log("_7_add_device_sm_sidebar_show_btn Pressed sidebar open");
     }
@@ -218,6 +224,7 @@ _8_select_room_update_device_sm_sidebar_show_btn.addEventListener("click", () =>
         _6_list_member_sm_sidebar.classList.remove("show");
         _7_add_device_sm_sidebar.classList.remove("show");
         clearAddDeviceForm();
+        _9_update_device_sm_sidebar.classList.remove("show");
         adjustSidebar(_8_select_room_sm_sidebar, _4_setting_menu_sidebar_show_btn);
         fillUpdateDeviceRoomListSidebar();
         console.log("_8_select_room_update_device_sm_sidebar_show_btn Pressed sidebar open");

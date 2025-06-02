@@ -1,3 +1,7 @@
+// file name: outsideClick_function_close_panel.js
+
+const DEBUG = false;
+
 import {
     clearAddDeviceForm,
     clearAddMemberForm
@@ -49,14 +53,12 @@ document.addEventListener("click", (e) => {
             !(button && button.contains(e.target))
         ) {
             sidebar.classList.remove("show");
-            console.log(`🔐 Sidebar closed by outside click: ${sidebar.id}`);
+            if (DEBUG) console.log(`🔐 Sidebar closed by outside click: ${sidebar.id}`);
 
-            // ✅ Check if it was the Add Device sidebar
-            if (sidebar.id === "sidebar7") { // Replace with actual ID!
+            // ✅ Clear forms for specific sidebars
+            if (sidebar.id === "sidebar7") {
                 clearAddDeviceForm();
-            }
-
-            if (sidebar.id === "sidebar5") { // Replace with actual ID!
+            } else if (sidebar.id === "sidebar5") {
                 clearAddMemberForm();
             }
         }

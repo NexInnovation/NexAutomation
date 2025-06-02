@@ -1,6 +1,6 @@
-document.addEventListener("DOMContentLoaded", () => {
-    startPeriodicDataRefresh(10); // 5 minutes interval
-});
+// file name: refresh_local_storage_data.js
+
+const DEBUG = false;
 
 import {
     fetchAndSaveBasicHomeData,
@@ -10,44 +10,56 @@ import {
     fetchAndSaveDevices
 } from '../../login/new/save_data_to_local_storage.js';
 
-
 /**
  * 🟩 Starts a periodic data refresh to keep localStorage in sync with Firebase
+ * @param {number} intervalMinutes - Interval in minutes for periodic refresh
  */
 export function startPeriodicDataRefresh(intervalMinutes) {
-    console.log(`🔁 Starting periodic data refresh every ${intervalMinutes} minutes...`);
+    if (DEBUG) console.log(`🔁 Starting periodic data refresh every ${intervalMinutes} minutes...`);
 
     const intervalMs = intervalMinutes * 60 * 1000;
 
     const uid = localStorage.getItem("currentUser_uid");
     const email = localStorage.getItem("currentUser_email");
     const homeId = localStorage.getItem("currentUser_homeId");
+    const role = localStorage.getItem("currentUser_role");
 
-    if (!uid || !email || !homeId) {
+    if (!uid || !email || !homeId || !role) {
         console.warn("⚠️ Missing user data in localStorage. Cannot start periodic refresh.");
         return;
     }
 
-    async function refreshData() {
-        console.log("🔄 Periodic data refresh triggered...");
+    const refreshData = async () => {
+        if (DEBUG) console.log("🔄 Periodic data refresh triggered...");
 
         try {
+            // 1️⃣ Basic home data
             await fetchAndSaveBasicHomeData(uid, email);
-            await fetchAndSaveAdminProfile(homeId, uid);
-            await fetchAndSaveMemberProfile(homeId, uid);
+
+            // 2️⃣ All users (admin + members)
             await fetchAndSaveAllUsers(homeId);
+
+            // 3️⃣ Current user's own profile (admin or member)
+            if (role === "admin") {
+                await fetchAndSaveAdminProfile(homeId, uid);
+            } else {
+                await fetchAndSaveMemberProfile(homeId, uid);
+            }
+
+            // 4️⃣ All devices
             await fetchAndSaveDevices(homeId);
-            console.log("✅ Periodic data refresh complete!");
+
+            if (DEBUG) console.log("✅ Periodic data refresh complete!");
         } catch (error) {
-            console.error("❌ Error during periodic data refresh:", error.message);
+            console.error("❌ Error during periodic data refresh:", error);
         }
-    }
+    };
 
     // Initial run
-    refreshData();
-    console.log("✅ Periodic data refresh started!");
+    refreshData().then(() => {
+        if (DEBUG) console.log("✅ Initial periodic data refresh done!");
+    });
 
-
-    // Repeat every interval
+    // Schedule subsequent refreshes
     setInterval(refreshData, intervalMs);
 }

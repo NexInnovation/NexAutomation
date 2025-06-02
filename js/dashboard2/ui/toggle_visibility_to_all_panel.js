@@ -1,5 +1,10 @@
+// file name: toggle_visibility_to_all_panel.js
+
+const DEBUG = false;
+
 import {
-    clearAddDeviceForm
+    clearAddDeviceForm,
+    clearAddMemberForm
 } from "./fill_function_to_all_panel.js";
 
 import {
@@ -100,64 +105,68 @@ _1_main_horizontal_sidebar_open_btn.addEventListener("click", () => {
 _2_profile_show_sidebar_show_btn.addEventListener("click", () => {
     if (_2_profile_show_sidebar.classList.contains("show")) {
         _2_profile_show_sidebar.classList.remove("show");
-        console.log("_2_profile_show_sidebar_show_btn Pressed sidebar close");
+        if (DEBUG) console.log("_2_profile_show_sidebar_show_btn Pressed sidebar close");
     } else {
         _2_profile_show_sidebar.classList.add("show");
         _3_Select_room_main_sidebar.classList.remove("show");
         _4_setting_menu_sidebar.classList.remove("show");
         _5_add_member_sm_sidebar.classList.remove("show");
+        clearAddMemberForm();
         _6_list_member_sm_sidebar.classList.remove("show");
         _7_add_device_sm_sidebar.classList.remove("show");
         clearAddDeviceForm();
         _8_select_room_sm_sidebar.classList.remove("show");
         _9_update_device_sm_sidebar.classList.remove("show");
         adjustSidebar(_2_profile_show_sidebar, _2_profile_show_sidebar_show_btn);
-        console.log("_2_profile_show_sidebar_show_btn Pressed sidebar open");
+        if (DEBUG) console.log("_2_profile_show_sidebar_show_btn Pressed sidebar open");
     }
 });
 
 _3_Select_room_main_sidebar_show_btn.addEventListener("click", () => {
     if (_3_Select_room_main_sidebar.classList.contains("show")) {
         _3_Select_room_main_sidebar.classList.remove("show");
-        console.log("_3_Select_room_main_sidebar_show_btn Pressed sidebar close");
+        if (DEBUG) console.log("_3_Select_room_main_sidebar_show_btn Pressed sidebar close");
     } else {
         _3_Select_room_main_sidebar.classList.add("show");
         _2_profile_show_sidebar.classList.remove("show");
         _4_setting_menu_sidebar.classList.remove("show");
         _5_add_member_sm_sidebar.classList.remove("show");
+        clearAddMemberForm();
         _6_list_member_sm_sidebar.classList.remove("show");
         _7_add_device_sm_sidebar.classList.remove("show");
         clearAddDeviceForm();
         _8_select_room_sm_sidebar.classList.remove("show");
         _9_update_device_sm_sidebar.classList.remove("show");
         adjustSidebar(_3_Select_room_main_sidebar, _3_Select_room_main_sidebar_show_btn);
-        console.log("_3_Select_room_main_sidebar_show_btn Pressed sidebar open");
+        if (DEBUG) console.log("_3_Select_room_main_sidebar_show_btn Pressed sidebar open");
     }
 });
 
 _4_setting_menu_sidebar_show_btn.addEventListener("click", () => {
     if (_4_setting_menu_sidebar.classList.contains("show")) {
         _4_setting_menu_sidebar.classList.remove("show");
-        console.log("_4_setting_menu_sidebar_show_btn Pressed sidebar close");
+        if (DEBUG) console.log("_4_setting_menu_sidebar_show_btn Pressed sidebar close");
     } else {
         _4_setting_menu_sidebar.classList.add("show");
         _2_profile_show_sidebar.classList.remove("show");
         _3_Select_room_main_sidebar.classList.remove("show");
         _5_add_member_sm_sidebar.classList.remove("show");
+        clearAddMemberForm();
         _6_list_member_sm_sidebar.classList.remove("show");
         _7_add_device_sm_sidebar.classList.remove("show");
         clearAddDeviceForm();
         _8_select_room_sm_sidebar.classList.remove("show");
         _9_update_device_sm_sidebar.classList.remove("show");
         adjustSidebar(_4_setting_menu_sidebar, _4_setting_menu_sidebar_show_btn);
-        console.log("_4_setting_menu_sidebar_show_btn Pressed sidebar open");
+        if (DEBUG) console.log("_4_setting_menu_sidebar_show_btn Pressed sidebar open");
     }
 });
 
 _5_add_member_sm_sidebar_show_btn.addEventListener("click", () => {
     if (_5_add_member_sm_sidebar.classList.contains("show")) {
         _5_add_member_sm_sidebar.classList.remove("show");
-        console.log("_5_add_member_sm_sidebar_show_btn Pressed sidebar close");
+        clearAddMemberForm();
+        if (DEBUG) console.log("_5_add_member_sm_sidebar_show_btn Pressed sidebar close");
     } else {
         _5_add_member_sm_sidebar.classList.add("show");
         _2_profile_show_sidebar.classList.remove("show");
@@ -169,26 +178,27 @@ _5_add_member_sm_sidebar_show_btn.addEventListener("click", () => {
         _8_select_room_sm_sidebar.classList.remove("show");
         _9_update_device_sm_sidebar.classList.remove("show");
         adjustSidebar(_5_add_member_sm_sidebar, _4_setting_menu_sidebar_show_btn);
-        console.log("_5_add_member_sm_sidebar_show_btn Pressed sidebar open");
+        if (DEBUG) console.log("_5_add_member_sm_sidebar_show_btn Pressed sidebar open");
     }
 });
 
 _6_list_member_sm_sidebar_show_btn.addEventListener("click", () => {
     if (_6_list_member_sm_sidebar.classList.contains("show")) {
         _6_list_member_sm_sidebar.classList.remove("show");
-        console.log("_6_list_member_sm_sidebar_show_btn Pressed sidebar close");
+        if (DEBUG) console.log("_6_list_member_sm_sidebar_show_btn Pressed sidebar close");
     } else {
         _6_list_member_sm_sidebar.classList.add("show");
         _2_profile_show_sidebar.classList.remove("show");
         _3_Select_room_main_sidebar.classList.remove("show");
         _4_setting_menu_sidebar.classList.remove("show");
         _5_add_member_sm_sidebar.classList.remove("show");
+        clearAddMemberForm();
         _7_add_device_sm_sidebar.classList.remove("show");
         clearAddDeviceForm();
         _8_select_room_sm_sidebar.classList.remove("show");
         _9_update_device_sm_sidebar.classList.remove("show");
         adjustSidebar(_6_list_member_sm_sidebar, _4_setting_menu_sidebar_show_btn);
-        console.log("_6_list_member_sm_sidebar_show_btn Pressed sidebar open");
+        if (DEBUG) console.log("_6_list_member_sm_sidebar_show_btn Pressed sidebar open");
     }
 });
 
@@ -196,37 +206,39 @@ _7_add_device_sm_sidebar_show_btn.addEventListener("click", () => {
     if (_7_add_device_sm_sidebar.classList.contains("show")) {
         _7_add_device_sm_sidebar.classList.remove("show");
         clearAddDeviceForm();
-        console.log("_7_add_device_sm_sidebar_show_btn Pressed sidebar close");
+        if (DEBUG) console.log("_7_add_device_sm_sidebar_show_btn Pressed sidebar close");
     } else {
         _7_add_device_sm_sidebar.classList.add("show");
         _2_profile_show_sidebar.classList.remove("show");
         _3_Select_room_main_sidebar.classList.remove("show");
         _4_setting_menu_sidebar.classList.remove("show");
         _5_add_member_sm_sidebar.classList.remove("show");
+        clearAddMemberForm();
         _6_list_member_sm_sidebar.classList.remove("show");
         _8_select_room_sm_sidebar.classList.remove("show");
         _9_update_device_sm_sidebar.classList.remove("show");
         adjustSidebar(_7_add_device_sm_sidebar, _4_setting_menu_sidebar_show_btn);
-        console.log("_7_add_device_sm_sidebar_show_btn Pressed sidebar open");
+        if (DEBUG) console.log("_7_add_device_sm_sidebar_show_btn Pressed sidebar open");
     }
 });
 
 _8_select_room_update_device_sm_sidebar_show_btn.addEventListener("click", () => {
     if (_8_select_room_sm_sidebar.classList.contains("show")) {
         _8_select_room_sm_sidebar.classList.remove("show");
-        console.log("_8_select_room_update_device_sm_sidebar_show_btn Pressed sidebar close");
+        if (DEBUG) console.log("_8_select_room_update_device_sm_sidebar_show_btn Pressed sidebar close");
     } else {
         _8_select_room_sm_sidebar.classList.add("show");
         _2_profile_show_sidebar.classList.remove("show");
         _3_Select_room_main_sidebar.classList.remove("show");
         _4_setting_menu_sidebar.classList.remove("show");
         _5_add_member_sm_sidebar.classList.remove("show");
+        clearAddMemberForm();
         _6_list_member_sm_sidebar.classList.remove("show");
         _7_add_device_sm_sidebar.classList.remove("show");
         clearAddDeviceForm();
         _9_update_device_sm_sidebar.classList.remove("show");
         adjustSidebar(_8_select_room_sm_sidebar, _4_setting_menu_sidebar_show_btn);
         fillUpdateDeviceRoomListSidebar();
-        console.log("_8_select_room_update_device_sm_sidebar_show_btn Pressed sidebar open");
+        if (DEBUG) console.log("_8_select_room_update_device_sm_sidebar_show_btn Pressed sidebar open");
     }
 });

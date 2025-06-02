@@ -1,3 +1,5 @@
+// save_data_to_local_storage.js
+
 import {
     db,
     ref,
@@ -77,7 +79,8 @@ export async function fetchAndSaveAdminProfile(homeId, currentUid) {
 
     if (adminSnap.exists()) {
         const adminProfile = adminSnap.val();
-        localStorage.setItem("currentUser_adminProfile", JSON.stringify(adminProfile));
+        // localStorage.setItem("currentUser_adminProfile", JSON.stringify(adminProfile));
+        localStorage.setItem("currentUser_fullProfile", JSON.stringify(adminProfile));
         console.log("✅ Admin profile saved to localStorage:", adminProfile);
     } else {
         console.warn("⚠️ Admin profile not found in DB.");
@@ -181,21 +184,25 @@ export async function fetchAndSaveDevices(homeId) {
  * 🟩 Master function to populate all data to localStorage
  */
 export async function populateAllDataToLocalStorage(uid, email) {
-    try {
-        console.log("🟡 Starting to populate all data to localStorage...");
+    console.log("🟡 Starting to populate all data to localStorage...");
 
-        await fetchAndSaveBasicHomeData(uid, email);
-        const homeId = localStorage.getItem("currentUser_homeId");
+    // 1️⃣ Fetch basic home data (homeId, role, etc.)
+    await fetchAndSaveBasicHomeData(uid, email);
+    const homeId = localStorage.getItem("currentUser_homeId");
 
-        // ✅ Always call both (harmless if one is empty)
+    // 2️⃣ Fetch all users (admin + members) to localStorage
+    await fetchAndSaveAllUsers(homeId);
+
+    // 3️⃣ Fetch current user's own profile and save as "currentUser_fullProfile"
+    const role = localStorage.getItem("currentUser_role");
+    if (role === "admin") {
         await fetchAndSaveAdminProfile(homeId, uid);
+    } else {
         await fetchAndSaveMemberProfile(homeId, uid);
-
-        await fetchAndSaveAllUsers(homeId);
-        await fetchAndSaveDevices(homeId);
-
-        console.log("✅ All data successfully saved to localStorage!");
-    } catch (error) {
-        console.error("❌ Error populating data:", error.message);
     }
+
+    // 4️⃣ Fetch all devices and save
+    await fetchAndSaveDevices(homeId);
+
+    console.log("✅ All data successfully saved to localStorage!");
 }

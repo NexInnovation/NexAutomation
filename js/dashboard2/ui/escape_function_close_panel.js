@@ -1,6 +1,22 @@
+// file name: escape_function_close_panel.js
+
+const DEBUG = false;
+
 import {
-    clearAddDeviceForm
+    clearAddDeviceForm,
+    clearAddMemberForm
 } from "./fill_function_to_all_panel.js";
+
+/**
+ * 🔧 Clears relevant forms based on which sidebar was closed
+ */
+function clearSidebarFormIfNeeded(sidebarId) {
+    if (sidebarId === "sidebar7") {
+        clearAddDeviceForm();
+    } else if (sidebarId === "sidebar5") {
+        clearAddMemberForm();
+    }
+}
 
 document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
@@ -16,18 +32,13 @@ document.addEventListener("keydown", (e) => {
             window._9_update_device_sm_sidebar
         ];
 
-        sidebars.forEach((sidebar) => {
+        for (const sidebar of sidebars) {
             if (sidebar && sidebar.classList.contains("show")) {
                 sidebar.classList.remove("show");
-                console.log(`🚪 Closed via Escape key: ${sidebar.id}`);
+                if (DEBUG) console.log(`🚪 Closed via Escape key: ${sidebar.id}`);
+                clearSidebarFormIfNeeded(sidebar.id);
+                break; // Exit after closing one sidebar
             }
-            // ✅ Check if it was the Add Device sidebar
-            if (sidebar.id === "sidebar7") {
-                // 🔧 Clear Add Device form
-                clearAddDeviceForm();
-            }
-        });
-
-
+        }
     }
 });

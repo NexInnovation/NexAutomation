@@ -126,6 +126,10 @@ async function handleSignup() {
         console.log("🟡 Populating localStorage...");
         await populateAllDataToLocalStorage(uid, email);
 
+        console.log("✅ Signup flow complete! Ready for dashboard redirection.");
+        sessionStorage.removeItem("isManualLogin");
+        sessionStorage.removeItem("isManualSignUp");
+
         Swal.fire({
             icon: 'success',
             title: 'Signup Complete',
@@ -133,9 +137,6 @@ async function handleSignup() {
             timer: 1500,
             showConfirmButton: false
         }).then(() => {
-            console.log("✅ Signup flow complete! Ready for dashboard redirection.");
-            sessionStorage.removeItem("isManualLogin");
-            sessionStorage.removeItem("isManualSignUp");
             window.location.href = "dashboard2.html";
         });
 
@@ -232,6 +233,10 @@ async function handleLogin() {
         console.log("🟡 Populating localStorage...");
         await populateAllDataToLocalStorage(uid, email);
 
+        console.log("✅ Login flow complete! Ready for dashboard redirection.");
+        sessionStorage.removeItem("isManualLogin");
+        sessionStorage.removeItem("isManualSignUp");
+
         Swal.fire({
             icon: 'success',
             title: 'Welcome!',
@@ -239,9 +244,6 @@ async function handleLogin() {
             timer: 1500,
             showConfirmButton: false
         }).then(() => {
-            console.log("✅ Login flow complete! Ready for dashboard redirection.");
-            sessionStorage.removeItem("isManualLogin");
-            sessionStorage.removeItem("isManualSignUp");
             window.location.href = "dashboard2.html";
         });
 
@@ -312,6 +314,10 @@ onAuthStateChanged(auth, async (user) => {
 
                 await populateAllDataToLocalStorage(uid, email);
 
+                console.log("✅ Auto-login flow complete! Ready for dashboard redirection.");
+                sessionStorage.removeItem("isManualLogin");
+                sessionStorage.removeItem("isManualSignUp");
+
                 Swal.fire({
                     icon: 'success',
                     title: 'Welcome Back!',
@@ -319,9 +325,6 @@ onAuthStateChanged(auth, async (user) => {
                     timer: 1500,
                     showConfirmButton: false
                 }).then(() => {
-                    console.log("✅ Auto-login flow complete! Ready for dashboard redirection.");
-                    sessionStorage.removeItem("isManualLogin");
-                    sessionStorage.removeItem("isManualSignUp");
                     window.location.href = "dashboard2.html";
                 });
 

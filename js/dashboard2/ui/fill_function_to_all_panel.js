@@ -12,12 +12,17 @@ import {
 } from "../../firebase-module.js";
 
 import {
+    deleteMemberByEmail
+} from "../fdb-logic functions/delet_member.js";
+
+import {
     showRoomOnDashboard
 } from "./show_dashboard.js";
 
 import {
     adjustSidebar
 } from "./toggle_visibility_to_all_panel.js";
+
 
 /**
  * Utility: Hide a sidebar
@@ -381,6 +386,46 @@ async function deleteDevice(deviceId, roomName) {
 /**
  * 🟩 Fill Member List Sidebar (Sidebar 6)
  */
+// export function fillMemberListSidebar() {
+//     if (DEBUG) console.log("🟡 Starting to fill Member List Sidebar...");
+
+//     // Get references to the admin and member lists
+//     const adminListContainer = document.getElementById("admin-list");
+//     const memberListContainer = document.getElementById("member-list");
+
+//     // Clear existing entries
+//     adminListContainer.innerHTML = "";
+//     memberListContainer.innerHTML = "";
+
+//     // 🔧 Load all users from localStorage
+//     const allUsers = JSON.parse(localStorage.getItem("allUsers") || "{}");
+//     if (DEBUG) console.log("🗃️ All users from localStorage:", allUsers);
+
+//     // 🟩 Populate admin
+//     const adminEntries = allUsers.admin || {};
+//     for (const uid in adminEntries) {
+//         const admin = adminEntries[uid];
+//         const li = document.createElement("li");
+//         const displayName = `${admin.firstName || '-'} : ${admin.email || '-'}`;
+//         li.textContent = displayName;
+//         adminListContainer.appendChild(li);
+//         if (DEBUG) console.log(`✅ Added admin to list: ${displayName}`);
+//     }
+
+//     // 🟩 Populate members
+//     const memberEntries = allUsers.members || {};
+//     for (const uid in memberEntries) {
+//         const member = memberEntries[uid];
+//         const li = document.createElement("li");
+//         const displayName = `${member.firstName || '-'} : ${member.email || '-'}`;
+//         li.textContent = displayName;
+//         memberListContainer.appendChild(li);
+//         if (DEBUG) console.log(`✅ Added member to list: ${displayName}`);
+//     }
+
+//     if (DEBUG) console.log("✅ Final: Member list successfully populated in Sidebar 6!");
+// }
+
 export function fillMemberListSidebar() {
     if (DEBUG) console.log("🟡 Starting to fill Member List Sidebar...");
 
@@ -411,15 +456,45 @@ export function fillMemberListSidebar() {
     const memberEntries = allUsers.members || {};
     for (const uid in memberEntries) {
         const member = memberEntries[uid];
+
         const li = document.createElement("li");
-        const displayName = `${member.firstName || '-'} : ${member.email || '-'}`;
-        li.textContent = displayName;
+
+        // Create flex container to align text and delete icon
+        const flexContainer = document.createElement("div");
+        flexContainer.classList.add("member-list-entry");
+
+        // Create span for member info
+        const span = document.createElement("span");
+        span.textContent = `${member.firstName || '-'} : ${member.email || '-'}`;
+
+        // Create delete button
+        const deleteBtn = document.createElement("button");
+        deleteBtn.innerHTML = "🗑️";
+        deleteBtn.classList.add("delete-member-btn");
+
+        // Attach delete logic to button
+        deleteBtn.addEventListener("click", () => {
+            if (DEBUG) console.log(`🟡 Delete button clicked for member: ${member.email}`);
+            deleteMemberByEmail(member.email, uid);
+        });
+
+        // Append span and delete button to the flex container
+        flexContainer.appendChild(span);
+        flexContainer.appendChild(deleteBtn);
+
+        // Append flex container to li
+        li.appendChild(flexContainer);
+
+        // Append li to the member list container
         memberListContainer.appendChild(li);
-        if (DEBUG) console.log(`✅ Added member to list: ${displayName}`);
+
+        if (DEBUG) console.log(`✅ Added member to list: ${member.email}`);
     }
 
     if (DEBUG) console.log("✅ Final: Member list successfully populated in Sidebar 6!");
 }
+
+
 
 /**
  * 🟩 Utility: Clear Add Device Form

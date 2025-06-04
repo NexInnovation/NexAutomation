@@ -20,7 +20,8 @@ import {
     get,
     set,
     update,
-    push
+    push,
+    remove
 } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-database.js";
 
 // ✅ Firebase config
@@ -55,5 +56,6 @@ export {
     get,
     set,
     update,
-    push
+    push,
+    remove
 };

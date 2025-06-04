@@ -137,6 +137,7 @@ async function handleSignup() {
             timer: 1500,
             showConfirmButton: false
         }).then(() => {
+            sessionStorage.removeItem("suppressOnAuthChange");
             window.location.href = "dashboard2.html";
         });
 
@@ -244,6 +245,7 @@ async function handleLogin() {
             timer: 1500,
             showConfirmButton: false
         }).then(() => {
+            sessionStorage.removeItem("suppressOnAuthChange");
             window.location.href = "dashboard2.html";
         });
 
@@ -325,6 +327,7 @@ onAuthStateChanged(auth, async (user) => {
                     timer: 1500,
                     showConfirmButton: false
                 }).then(() => {
+                    sessionStorage.removeItem("suppressOnAuthChange");
                     window.location.href = "dashboard2.html";
                 });
 

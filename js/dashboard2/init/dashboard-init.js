@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 confirmButtonText: 'Go to Login',
                 allowOutsideClick: false,
             }).then(() => {
-                window.location.href = 'index.html';
+                // window.location.href = 'index.html';
             });
         }
     });

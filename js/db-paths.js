@@ -2,7 +2,7 @@
 
 const DB_PATHS = {
     // Global config
-    lastHomeNumber: "NexInnovation-config/lastNumber",
+    lastHomeNumber: "NexInnovation-config/lastHomeNumber",
 
     // User-specific (stored outside home-level, to link users to homes)
     userProfileLink: (uid) => `users/${uid}`, // Contains homeId + role
@@ -16,6 +16,7 @@ const DB_PATHS = {
     homeData: (homeId) => `automation/${homeId}/home-data`,
     totalMembers: (homeId) => `automation/${homeId}/home-data/total member`,
     totalDevices: (homeId) => `automation/${homeId}/home-data/total device`,
+    lastDevicesNumber: (homeId) => `automation/${homeId}/home-data/last device Number`,
 
     // Home-level user management
     userList: (homeId) => `automation/${homeId}/user-list`,

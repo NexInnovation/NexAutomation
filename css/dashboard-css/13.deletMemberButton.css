@@ -1,0 +1,25 @@
+/* 🔧 Flex container for member list entry */
+.member-list-entry {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 🔧 Style for delete button */
+.delete-member-btn {
+    background: transparent;
+    color: #ff4d4f;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.delete-member-btn:hover {
+    color: #ff1a1a;
+}
+
+.delete-member-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.4);
+}

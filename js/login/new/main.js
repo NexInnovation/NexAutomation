@@ -1,3 +1,5 @@
+// main.js
+
 import {
     auth,
     db,
@@ -18,60 +20,30 @@ import DB_PATHS from '../../db-paths.js';
 import {
     populateAllDataToLocalStorage
 } from './save_data_to_local_storage.js';
+import {
+    validateSignupForm,
+    validateLoginForm
+} from './validateSignupLoginForm.js';
+
+const DEBUG = true;
 
 // ========== SIGNUP FUNCTION ==========
 async function handleSignup() {
-    console.log("🔵 handleSignup() called");
+    if (DEBUG) console.log("🔵 handleSignup() called");
+
     const firstName = document.getElementById("signup-name").value.trim();
     const email = document.getElementById("signup-email").value.trim().toLowerCase();
     const password = document.getElementById("signup-password").value.trim();
 
-    console.log("🔍 Signup form data:", {
-        firstName,
-        email,
-        password: password ? '***' : '(empty)'
-    });
-
-    if (!firstName) {
-        return Swal.fire({
-            icon: 'warning',
-            title: 'Missing Name',
-            text: 'Please enter your first name.'
-        });
-    }
-    if (!email) {
-        return Swal.fire({
-            icon: 'warning',
-            title: 'Missing Email',
-            text: 'Please enter your email address.'
-        });
-    }
-    if (!/^\S+@\S+\.\S+$/.test(email)) {
-        return Swal.fire({
-            icon: 'error',
-            title: 'Invalid Email',
-            text: 'Please enter a valid email address.'
-        });
-    }
-    if (!password) {
-        return Swal.fire({
-            icon: 'warning',
-            title: 'Missing Password',
-            text: 'Please enter a password.'
-        });
-    }
-    if (password.length < 6) {
-        return Swal.fire({
-            icon: 'error',
-            title: 'Weak Password',
-            text: 'Password must be at least 6 characters long.'
-        });
+    if (!validateSignupForm(firstName, email, password, DEBUG)) {
+        if (DEBUG) console.log("validation error returning...");
+        return;
     }
 
     sessionStorage.setItem("isManualSignUp", "true");
 
     try {
-        console.log("⏳ Creating Firebase account...");
+        if (DEBUG) console.log("⏳ Creating Firebase account...");
         Swal.fire({
             title: 'Creating account...',
             text: 'Please wait while we create your account.',
@@ -83,7 +55,7 @@ async function handleSignup() {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         const uid = user.uid;
-        console.log("✅ Firebase account created:", uid);
+        if (DEBUG) console.log("✅ Firebase account created:", uid);
 
         const lastNumberRef = ref(db, DB_PATHS.lastHomeNumber);
         const lastNumberSnap = await get(lastNumberRef);
@@ -93,7 +65,7 @@ async function handleSignup() {
         const pushKey = push(ref(db)).key;
         const homeId = `home${formattedNumber}-${pushKey}`;
 
-        console.log("🟩 New homeId generated:", homeId);
+        if (DEBUG) console.log("🟩 New homeId generated:", homeId);
 
         await set(lastNumberRef, formattedNumber);
 
@@ -114,19 +86,18 @@ async function handleSignup() {
         updates[DB_PATHS.userProfileLink(uid)] = {
             homeId,
             role: 'admin'
-        }; // 🟩 FIXED
+        };
         updates[DB_PATHS.homeAdminUser(homeId, uid)] = profileData;
         updates[DB_PATHS.userList(homeId) + `/${uid}`] = true;
         updates[DB_PATHS.totalMembers(homeId)] = 0;
         updates[DB_PATHS.totalDevices(homeId)] = 0;
 
-        console.log("🟡 Writing new user data to Firebase:", updates);
+        if (DEBUG) console.log("🟡 Writing new user data to Firebase:", updates);
         await update(ref(db), updates);
 
-        console.log("🟡 Populating localStorage...");
         await populateAllDataToLocalStorage(uid, email);
 
-        console.log("✅ Signup flow complete! Ready for dashboard redirection.");
+        if (DEBUG) console.log("✅ Signup complete! Redirecting...");
         sessionStorage.removeItem("isManualLogin");
         sessionStorage.removeItem("isManualSignUp");
 
@@ -137,7 +108,7 @@ async function handleSignup() {
             timer: 1500,
             showConfirmButton: false
         }).then(() => {
-            sessionStorage.removeItem("suppressOnAuthChange");
+            sessionStorage.setItem("isManualSignUp", "false");
             window.location.href = "dashboard2.html";
         });
 
@@ -148,56 +119,27 @@ async function handleSignup() {
             title: 'Signup Failed',
             text: error.message || "An error occurred. Please try again."
         });
+        sessionStorage.setItem("isManualSignUp", "false");
     }
 }
 
-
 // ========== LOGIN FUNCTION ==========
 async function handleLogin() {
-    console.log("🔵 handleLogin() called");
+    if (DEBUG) console.log("🔵 handleLogin() called");
+
     const email = document.getElementById("login-email").value.trim().toLowerCase();
     const password = document.getElementById("login-password").value.trim();
     const rememberMe = document.getElementById("remember-me")?.checked;
 
-    console.log("🔍 Login form data:", {
-        email,
-        password: password ? '***' : '(empty)',
-        rememberMe
-    });
-
-    if (!email) {
-        return Swal.fire({
-            icon: 'warning',
-            title: 'Missing Email',
-            text: 'Please enter your email address.'
-        });
-    }
-    if (!/^\S+@\S+\.\S+$/.test(email)) {
-        return Swal.fire({
-            icon: 'error',
-            title: 'Invalid Email',
-            text: 'Please enter a valid email address.'
-        });
-    }
-    if (!password) {
-        return Swal.fire({
-            icon: 'warning',
-            title: 'Missing Password',
-            text: 'Please enter a password.'
-        });
-    }
-    if (password.length < 6) {
-        return Swal.fire({
-            icon: 'error',
-            title: 'Weak Password',
-            text: 'Password must be at least 6 characters long.'
-        });
+    if (!validateLoginForm(email, password, DEBUG)) {
+        if (DEBUG) console.log("validation error returning...");
+        return;
     }
 
     sessionStorage.setItem("isManualLogin", "true");
 
     try {
-        console.log("⏳ Starting Firebase login...");
+        if (DEBUG) console.log("⏳ Starting Firebase login...");
         Swal.fire({
             title: 'Logging in...',
             text: 'Please wait while we authenticate you.',
@@ -217,11 +159,9 @@ async function handleLogin() {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         const uid = user.uid;
-        console.log("✅ Firebase login successful:", uid);
+        if (DEBUG) console.log("✅ Firebase login successful:", uid);
 
-        // const userSnap = await get(ref(db, DB_PATHS.userProfile(uid)));
         const userSnap = await get(ref(db, DB_PATHS.userProfileLink(uid)));
-
         if (!userSnap.exists()) throw new Error("User profile not found in DB");
 
         const {
@@ -231,10 +171,9 @@ async function handleLogin() {
         const profileData = profileSnap.val();
         const firstName = profileData?.firstName || "";
 
-        console.log("🟡 Populating localStorage...");
         await populateAllDataToLocalStorage(uid, email);
 
-        console.log("✅ Login flow complete! Ready for dashboard redirection.");
+        if (DEBUG) console.log("✅ Login complete! Redirecting...");
         sessionStorage.removeItem("isManualLogin");
         sessionStorage.removeItem("isManualSignUp");
 
@@ -266,15 +205,15 @@ async function handleLogin() {
     }
 }
 
-// ========== BUTTON LISTENERS ==========
+// BUTTON LISTENERS
 document.getElementById("signup-btn")?.addEventListener("click", handleSignup);
 document.getElementById("login-btn")?.addEventListener("click", handleLogin);
 
-// ========== ENTER KEY HANDLER ==========
+// ENTER KEY HANDLER
 document.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
         e.preventDefault();
-        console.log("🔵 Enter key pressed: trigger submit");
+        if (DEBUG) console.log("🔵 Enter key pressed: trigger submit");
 
         const isSignupVisible = document.querySelector("#flip-container")?.classList.contains("flipped");
         if (isSignupVisible) {
@@ -285,7 +224,7 @@ document.addEventListener("keydown", (e) => {
     }
 });
 
-// ========== ALREADY LOGGED IN CHECK ==========
+// AUTO-LOGIN CHECK
 Swal.fire({
     title: 'Checking login status...',
     text: 'Please wait...',
@@ -296,27 +235,21 @@ Swal.fire({
 });
 
 onAuthStateChanged(auth, async (user) => {
-    console.log("🟡 onAuthStateChanged fired!");
+    if (DEBUG) console.log("🟡 onAuthStateChanged fired!");
     const isManualLogin = sessionStorage.getItem("isManualLogin") === "true";
     const isManualSignUp = sessionStorage.getItem("isManualSignUp") === "true";
     const rememberMe = localStorage.getItem("rememberMe") === "true";
 
-    console.log("🔍 Auto-login check:", {
-        isManualLogin,
-        isManualSignUp,
-        rememberMe
-    });
-
     if (!isManualLogin && !isManualSignUp) {
         if (user && rememberMe) {
             try {
-                console.log("✅ Auto-login detected with Remember Me");
+                if (DEBUG) console.log("✅ Auto-login detected with Remember Me");
                 const uid = user.uid;
                 const email = user.email;
 
                 await populateAllDataToLocalStorage(uid, email);
 
-                console.log("✅ Auto-login flow complete! Ready for dashboard redirection.");
+                if (DEBUG) console.log("✅ Auto-login complete! Redirecting...");
                 sessionStorage.removeItem("isManualLogin");
                 sessionStorage.removeItem("isManualSignUp");
 
@@ -340,7 +273,7 @@ onAuthStateChanged(auth, async (user) => {
                 });
             }
         } else {
-            console.log("ℹ️ No auto-login needed. Letting user interact with login form.");
+            if (DEBUG) console.log("ℹ️ No auto-login needed. Letting user interact with login form.");
             Swal.close();
         }
     }

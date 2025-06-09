@@ -3,9 +3,9 @@ import {
     onAuthStateChanged
 } from '../../firebase-module.js';
 
-import {
-    logAllLocalStorageData
-} from '../fdb-logic functions/temp/logAllLocalStorageData.js';
+// import {
+//     logAllLocalStorageData
+// } from '../fdb-logic functions/temp/logAllLocalStorageData.js';
 
 import {
     fillProfileDetails,

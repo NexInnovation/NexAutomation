@@ -35,7 +35,7 @@ if (logoutBtn) {
     });
 }
 
-// ========== 🔒 Auto Logout on Tab Close (if not remembered) ==========
+//// ========== 🔒 Auto Logout on Tab Close (if not remembered) ==========
 // window.addEventListener("beforeunload", (event) => {
 //     const rememberMe = localStorage.getItem("rememberMe") === "true";
 //     const manualLogout = sessionStorage.getItem("manualLogout") === "true";

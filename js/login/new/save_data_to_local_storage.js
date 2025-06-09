@@ -10,11 +10,14 @@ import DB_PATHS from '../../db-paths.js';
 /**
  * 🟩 Fetch basic home data: homeId, role, total members, total devices
  */
+
+
 export async function fetchAndSaveBasicHomeData(uid, email) {
     console.log("🟡 Fetching basic home data...");
 
     const userRef = ref(db, DB_PATHS.userProfileLink(uid));
     const userSnap = await get(userRef);
+
     if (!userSnap.exists()) throw new Error("❌ User profile not found in DB!");
 
     const {

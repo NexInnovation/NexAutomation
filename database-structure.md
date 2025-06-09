@@ -12,6 +12,7 @@
 │       ├── home-data/
 │       │   ├── total member
 │       │   └── total device
+│       │   └── last device Number
 │       │
 │       ├── user-list/
 │       │   └── uid: true/false
